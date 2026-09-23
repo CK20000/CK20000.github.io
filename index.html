@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chanu Kalubowila — Engineering Workbench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <span class="status"><span class="status-dot"></span>Available for PhD 2026</span>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1>I build systems that <span class="accent">trace from silicon to simulation</span>.</h1>
+  <div class="subtitle">Mechanical Engineering (Mechatronics) · University of Moratuwa · GPA 3.79 · Best Paper MERCon 2026</div>
+  <p class="bio">
+    Bare-metal firmware, custom PCB design, physics-accurate simulation, and hardware-in-the-loop validation —
+    from a 24 kHz sensorless FOC kernel for UAV motors to an open-source digital twin that auto-generates
+    SPICE netlists from KiCad. Every number below traces from a real component through real firmware through real physics.
+  </p>
+  <div class="links">
+    <a href="cv.pdf" target="_blank">Download CV</a>
+    <a href="https://github.com/CK20000" target="_blank">GitHub</a>
+    <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a>
+  </div>
+</header>
+
+<div class="section-label">Selected Projects</div>
+
+<div class="project-grid">
+
+  <a class="project-card" href="digital-twin.html">
+    <h3>KiCad PCB Digital Twin</h3>
+    <div class="card-meta">2025 – Present · Independent Research</div>
+    <div class="card-desc">Physics-accurate digital twin that auto-generates a complete ngspice netlist from any <code>.kicad_pcb</code> file. Real firmware on virtual MCU, live thermal and current rendering.</div>
+    <div class="card-specs">
+      <span class="card-tag">140 nets</span>
+      <span class="card-tag">ngspice + Renode</span>
+      <span class="card-tag">14 milestones</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+  <a class="project-card" href="foc-esc.html">
+    <h3>Bare-Metal Sensorless FOC ESC</h3>
+    <div class="card-meta">2024 – Present · STM32G431</div>
+    <div class="card-desc">High-frequency FOC drive engine for low-inductance UAV motors. State-Space Flux Observer with hardware CORDIC acceleration, running a rigid 24 kHz loop at 30,000+ RPM.</div>
+    <div class="card-specs">
+      <span class="card-tag">24 kHz loop</span>
+      <span class="card-tag">16.05 µs cycle</span>
+      <span class="card-tag">30k RPM</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+  <a class="project-card" href="h743-flight-controller.html">
+    <h3>STM32H743 Flight Controller</h3>
+    <div class="card-meta">2026 – Present · Bare-Metal Betaflight Port</div>
+    <div class="card-desc">Custom target files and 4-layer carrier board enabling standard Betaflight firmware on a generic industrial H743 devboard — with three critical silicon-level bug fixes documented.</div>
+    <div class="card-specs">
+      <span class="card-tag">STM32H743</span>
+      <span class="card-tag">Bare-metal port</span>
+      <span class="card-tag">4-layer PCB</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+  <a class="project-card" href="pcv-analyzer.html">
+    <h3>Vision-Based PCV Analyzer</h3>
+    <div class="card-meta">2021 – 2025 · Final Year Research · Best Paper MERCon 2026</div>
+    <div class="card-desc">Fully integrated instrument replacing manual microhematocrit reading with deep-learning segmentation. Lidless passively-retaining rotor, closed-loop PID speed control, clinical validation.</div>
+    <div class="card-specs">
+      <span class="card-tag">1.535 pp MAE</span>
+      <span class="card-tag">78% CLIA</span>
+      <span class="card-tag">patent pending</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+  <a class="project-card" href="flapping-wing.html">
+    <h3>Flapping-Wing Robot</h3>
+    <div class="card-meta">2023 – 2024 · Full-Stack Design, Simulation & Prototype</div>
+    <div class="card-desc">Complete bio-inspired ornithopter — mechanical design, ANSYS + Adams simulation, custom ROS+Gazebo aerodynamic plugins, ESP32 comms, and a load-cell test bench for force validation.</div>
+    <div class="card-specs">
+      <span class="card-tag">ROS+Gazebo</span>
+      <span class="card-tag">Custom aero plugins</span>
+      <span class="card-tag">Open source</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+</div>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
