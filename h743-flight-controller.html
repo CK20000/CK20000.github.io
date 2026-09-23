@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STM32H743 Flight Controller — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000/STM32h743-devboard-betaflight" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="project">
+  <div class="project-header">
+    <div class="project-title">STM32H743 Betaflight Flight Controller — Bare-Metal Port</div>
+    <div class="project-meta">2026 – Present · DevEBox H743VIT6 · Independent Research · <a href="https://github.com/CK20000/STM32h743-devboard-betaflight" target="_blank">GitHub ↗</a></div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">mcu:</span><span class="v">STM32H743VIT6</span></span>
+      <span class="spec"><span class="k">bus:</span><span class="v">480 MHz Cortex-M7</span></span>
+      <span class="spec"><span class="k">pcb:</span><span class="v">4-layer carrier</span></span>
+      <span class="spec"><span class="k">imu:</span><span class="v">Dual BMI160</span></span>
+      <span class="spec"><span class="k">motors:</span><span class="v">8 outputs</span></span>
+      <span class="spec"><span class="k">servos:</span><span class="v">4 outputs</span></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="h743-overview">Overview</button>
+    <button class="tab" data-tab="h743-postmortem">Post-Mortem</button>
+    <button class="tab" data-tab="h743-hardware">Hardware</button>
+    <button class="tab" data-tab="h743-firmware">Firmware</button>
+  </div>
+
+  <div class="tab-pane active" id="h743-overview">
+    <div class="pane-split">
+      <div>
+        <h4>WHAT IT DOES</h4>
+        <p>
+          Custom Betaflight target files and a 4-layer carrier board that enable standard Betaflight
+          firmware on a generic industrial STM32H743VIT6 devboard. Where commercial flight controllers
+          restrict you to pre-configured layouts, using a bare industrial devboard opens up full control
+          of the silicon — at a fraction of the cost.
+        </p>
+        <p>
+          The project is packaged as a definitive architectural guide: porting rules, timer remapping
+          for advanced multi-rotor and actuator configurations, and fixes for three silicon-level bugs
+          that block boot on this specific H743 variant.
+        </p>
+        <h4>WHY IT'S PUBLIC</h4>
+        <p>
+          Unlocking full silicon control for the hobbyist and researcher community beyond pre-configured
+          commercial flight controllers. Every fix documented as a reproducible recipe, not a one-off.
+        </p>
+      </div>
+      <div>
+        <div class="img-placeholder">
+          <img src="assets/images/h743-fc/carrier-board.jpg" alt="4-layer H743 carrier board"
+               onerror="this.style.display='none'; this.parentNode.textContent='Carrier board render — assets/images/h743-fc/carrier-board.jpg';">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="h743-postmortem">
+    <h4 class="danger">THE PROBLEM</h4>
+    <p>
+      Betaflight's H7 codebase is optimized for 8 MHz or 24 MHz crystals on commercial FC hardware.
+      The DevEBox board uses a 25 MHz HSE, and its silicon behaves differently in three separate ways
+      that all block boot or peripheral initialization. Each failure looks unrelated; all three must
+      be fixed for the target to be usable.
+    </p>
+
+    <h4 class="warn">BUG 1 — 25 MHz HSE / PLL1 VCO OVERFLOW</h4>
+    <p>
+      Applying the default STM32H7 PLL multipliers to a 25 MHz HSE pushed the internal VCO to
+      <strong>3000 MHz</strong>, exceeding the 960 MHz hardware limit. The PLL engine fails, which
+      triggers an infinite safety reset loop inside <code>HandleStuckSysTick()</code> — the board
+      never reaches the main loop.
+    </p>
+    <p>
+      <strong>Fix:</strong> Rewrote the <code>pll1ConfigRevY</code> / <code>pll1ConfigRevV</code>
+      clock structures to scale the 25 MHz crystal safely to a stable 480 MHz SYSCLK
+      (M=5, N=192, P=2).
+    </p>
+
+    <h4 class="warn">BUG 2 — DEAD HSI48 BLOCKS USB ENUMERATION</h4>
+    <p>
+      STM32 USB peripherals need a 48 MHz clock. Betaflight tries to enable the internal HSI48
+      oscillator to generate it. On this specific H743 revision, <code>RCC_CR_HSI48ON</code> register
+      writes are silently ignored — the oscillator never starts, USB fails to enumerate, and the
+      virtual COM port is dead.
+    </p>
+    <p>
+      <strong>Fix:</strong> Bypassed the dead HSI48 circuit entirely. Synthesized a 48 MHz USB clock
+      from the working 25 MHz HSE via the PLL3 engine (M=5, N=48, Q=5), gated behind a custom
+      <code>USE_USB_CLOCK_PLL3</code> macro.
+    </p>
+
+    <h4 class="warn">BUG 3 — DUAL BMI160 DMA COLLISION</h4>
+    <p>
+      With two BMI160 gyroscopes on SPI1 and SPI2, the secondary gyro regularly failed to lock its
+      DMA channel. Two separate issues compounded:
+    </p>
+    <ul>
+      <li>
+        The H7 DMAMUX auto-allocator was already claiming <code>DMA1 Stream 0</code> for
+        <code>DSHOT_BITBANG_1</code>, starving <code>SPI1_TX</code> of a continuous stream. Result:
+        silent fallback to CPU-polling mode, missing the <code>dma</code> flag downstream.
+      </li>
+      <li>
+        The driver code (<code>pios_bmi160.c</code>) used a global <code>BMI160InitDone</code> boolean.
+        When Gyro 1 initialized, it set the flag; Gyro 2 skipped its configuration logic entirely on
+        cold boot.
+      </li>
+    </ul>
+    <p>
+      <strong>Fix:</strong> Hardcoded explicit DMA stream offsets in <code>config.h</code> (bypassing
+      DMAMUX auto-allocation) and refactored the driver to remove shared global state, so each BMI160
+      instance configures independently.
+    </p>
+
+    <h4>WHY THIS MATTERS</h4>
+    <p>
+      Each bug is documented with the exact register, the exact symptom, and the exact fix. Anyone
+      porting Betaflight to a non-reference H7 board can follow this recipe instead of rediscovering
+      it from a bricked board.
+    </p>
+  </div>
+
+  <div class="tab-pane" id="h743-hardware">
+    <h4>CARRIER BOARD</h4>
+    <ul>
+      <li>4-layer PCB, through-hole DevEBox H743VIT6 soldered to SMD pads</li>
+      <li>8 through-hole alignment pads for the devboard, reducing assembly complexity</li>
+      <li>Breakout pads for BMI160 and BMP280 GY-modules — pluggable, no dedicated routing needed</li>
+    </ul>
+
+    <h4>SENSOR TOPOLOGY</h4>
+    <ul>
+      <li><strong>Primary IMU:</strong> BMI160 on SPI1 (PA4 CS, PA5 SCK, PA6 MISO, PA7 MOSI, PC4 EXTI)</li>
+      <li><strong>Secondary IMU:</strong> BMI160 on SPI2 (PB12 CS, PB13 SCK, PB14 MISO, PB15 MOSI, PD10 EXTI)</li>
+      <li><strong>Barometer:</strong> BMP280 on I2C1 (PB8 SCL, PB9 SDA, address 0x76)</li>
+    </ul>
+
+    <h4>BLACKBOX & STORAGE</h4>
+    <ul>
+      <li>SDIO MicroSD slot (SDMMC1) with software card detection</li>
+      <li>QSPI external flash W25Q64JV (64 Mbit) for high-rate blackbox logging</li>
+    </ul>
+
+    <h4>ACTUATOR LAYOUT</h4>
+    <ul>
+      <li><strong>8 motor outputs:</strong> PA0–PA3 (M1–M4), PB0–PB1 (M5–M6, timer remapped), PD5–PD6 (M7–M8)</li>
+      <li><strong>4 servo outputs:</strong> PE5–PE6 (S1–S2), PE1 & PA15 (S3–S4, timer remapped)</li>
+    </ul>
+
+    <h4>SERIAL & TELEMETRY</h4>
+    <ul>
+      <li>UART1 (PA9/PA10) — Serial RX</li>
+      <li>UART3 (PD8/PD9) — ESC Telemetry</li>
+      <li>UART6 (PC6/PC7), UART7 (PE7/PE8) — general telemetry / VTX expansion</li>
+      <li>Beeper output on PC2 (inverted)</li>
+    </ul>
+
+    <h4>POWER & ADC</h4>
+    <ul>
+      <li>GM V1.0 power module integration: V_SENS on PC1, I_SENS on PC0 (16-bit ADC)</li>
+      <li>Baseline scaling: <code>vbat_scale=108</code>, <code>current_meter_scale=85</code> — must be calibrated per-module with a bench multimeter</li>
+      <li>AMS1117-3.3 LDO fed from an external 5 V rail, robust down to a 4.4 V sag threshold</li>
+    </ul>
+
+    <div class="img-placeholder" style="margin-top:12px">
+      <img src="assets/images/h743-fc/pcb-top.png" alt="PCB top view"
+           onerror="this.style.display='none'; this.parentNode.textContent='PCB top view — assets/images/h743-fc/pcb-top.png';">
+    </div>
+  </div>
+
+  <div class="tab-pane" id="h743-firmware">
+    <h4>CLOCK CONFIGURATION — THE CRITICAL FIX</h4>
+    <pre class="code"><span class="cm">// pll1ConfigRevV — scale 25 MHz HSE to 480 MHz SYSCLK</span>
+pllConfig_t pll1ConfigRevV = {
+    .clockMhz = <span class="num">480</span>,
+    .m = <span class="num">5</span>,      <span class="cm">// 25 MHz / 5 = 5 MHz reference</span>
+    .n = <span class="num">192</span>,    <span class="cm">// 5 MHz × 192 = 960 MHz VCO (within limit)</span>
+    .p = <span class="num">2</span>,      <span class="cm">// 960 MHz / 2 = 480 MHz SYSCLK</span>
+    .q = <span class="num">8</span>,
+    .r = <span class="num">5</span>,
+    .vos = PWR_REGULATOR_VOLTAGE_SCALE0,
+    .vciRange = RCC_PLL1VCIRANGE_2,
+};</pre>
+
+    <h4>USB CLOCK — BYPASS DEAD HSI48</h4>
+    <pre class="code"><span class="cm">// config.h</span>
+<span class="kw">#define</span> USE_USB_CLOCK_PLL3
+
+<span class="cm">// system_stm32h7xx.c — synthesize 48 MHz from HSE via PLL3</span>
+PLL3M = <span class="num">5</span>,   <span class="cm">// 25 MHz / 5 = 5 MHz</span>
+PLL3N = <span class="num">48</span>,  <span class="cm">// 5 MHz × 48 = 240 MHz VCO</span>
+PLL3Q = <span class="num">5</span>    <span class="cm">// 240 MHz / 5 = 48 MHz USB clock</span></pre>
+
+    <h4>DUAL-IMU DMA BYPASS</h4>
+    <pre class="code"><span class="cm">// config.h — override DMAMUX auto-allocation</span>
+<span class="kw">#define</span> DEFAULT_GYRO_TO_USE  GYRO_CONFIG_USE_GYRO_BOTH
+
+<span class="kw">#define</span> SPI1_TX_DMA_OPT  <span class="num">5</span>  <span class="cm">// → DMA1 Stream 4</span>
+<span class="kw">#define</span> SPI1_RX_DMA_OPT  <span class="num">2</span>  <span class="cm">// → DMA1 Stream 1</span>
+<span class="kw">#define</span> SPI2_TX_DMA_OPT  <span class="num">3</span>  <span class="cm">// → DMA1 Stream 2</span>
+<span class="kw">#define</span> SPI2_RX_DMA_OPT  <span class="num">4</span>  <span class="cm">// → DMA1 Stream 3</span></pre>
+
+    <h4>BUILD</h4>
+    <pre class="code">git clone --recurse-submodules https://github.com/betaflight/betaflight.git
+<span class="cm"># copy DEVBOARD/ target into src/config/configs/</span>
+<span class="cm"># patch system_stm32h7xx.c + pios_bmi160.c</span>
+make clean
+make DEVBOARD -j$(nproc)</pre>
+
+    <h4>FLASHING</h4>
+    <p>
+      Enter DFU mode by shorting BT0 to 3.3 V (pins near the SWD header), then flash the built
+      <code>.hex</code> via STM32CubeProgrammer or the Betaflight Configurator.
+    </p>
+  </div>
+
+  <div class="project-footer">
+    <span>Three silicon-level bugs fixed and documented — recipe shared for anyone porting to a non-reference H7 board.</span>
+    <span class="metric">480 MHz · 8 motors · dual IMU · open source</span>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flapping-Wing Robot — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="project">
+  <div class="project-header">
+    <div class="project-title">Flapping-Wing Robot — Full-Stack Design, Simulation &amp; Prototype</div>
+    <div class="project-meta">2023 – 2024 · Semester 5 Mechatronics Project · University of Moratuwa</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">wingspan:</span><span class="v">110 cm</span></span>
+      <span class="spec"><span class="k">weight:</span><span class="v">4.3 N</span></span>
+      <span class="spec"><span class="k">gearbox:</span><span class="v">1:14 reduction</span></span>
+      <span class="spec"><span class="k">flap freq:</span><span class="v">6 Hz</span></span>
+      <span class="spec"><span class="k">sim:</span><span class="v">ROS + Gazebo</span></span>
+      <span class="spec"><span class="k">control:</span><span class="v">ESP32 + nRF24L01</span></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="fw-overview">Overview</button>
+    <button class="tab" data-tab="fw-postmortem">Post-Mortem</button>
+    <button class="tab" data-tab="fw-mech">Mechanical &amp; Simulation</button>
+    <button class="tab" data-tab="fw-ros">ROS + Gazebo</button>
+  </div>
+
+  <div class="tab-pane active" id="fw-overview">
+    <div class="pane-split">
+      <div>
+        <h4>WHAT IT DOES</h4>
+        <p>
+          A complete bio-inspired ornithopter — designed, simulated, fabricated, and force-tested
+          end-to-end. From a Solid Edge assembly through FEA and CFD through a custom ROS+Gazebo
+          simulator through a physical prototype flying on an ESP32-controlled radio link.
+        </p>
+        <p>
+          110 cm wingspan, 4.3 N final weight, single-wing mechanism with a 1:14 multi-stage gearbox,
+          and a servo-actuated tail providing roll, pitch, and yaw authority.
+        </p>
+        <h4>WHY IT'S PUBLIC</h4>
+        <p>
+          Most flapping-wing research relies on MATLAB/Simulink for aerodynamic simulation. This project
+          developed custom lift/drag plugins directly in ROS+Gazebo, integrating real aerodynamic
+          coefficients computed from ANSYS and Vortex Lattice Method into the simulation loop — the
+          ROS package is published open-source as an alternative path for the robotics community.
+        </p>
+      </div>
+      <div>
+        <div class="img-placeholder">
+          <img src="assets/images/flapping-wing/prototype.jpg" alt="Flapping-wing prototype"
+               onerror="this.style.display='none'; this.parentNode.textContent='Prototype photo — assets/images/flapping-wing/prototype.jpg';">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="fw-postmortem">
+    <h4 class="warn">THE HARD PART</h4>
+    <p>
+      The engineering challenge wasn't any single subsystem — it was making the <em>simulation</em>
+      match the <em>physics</em>. Flapping-wing flight has no clean analytical model, so the workflow
+      was: measure forces on a physical test bench, feed those measurements into the simulation, and
+      iterate until the ROS+Gazebo model produced believable flight dynamics.
+    </p>
+
+    <h4 class="warn">CHALLENGES ENCOUNTERED</h4>
+    <ul>
+      <li>
+        <strong>Vortex Lattice Method convergence.</strong> The VLM solver used for wing-lift
+        approximation failed to converge at high flapping frequencies due to the strongly unsteady
+        wake dynamics. Worked around by switching to a hybrid approach: VLM as the low-frequency
+        envelope, ANSYS 2D CFD at representative cross-sections for the high-frequency components.
+      </li>
+      <li>
+        <strong>3D-printed structural strength.</strong> Early FDM-printed brackets and coupler links
+        failed under the cyclic flapping loads. Iterated on wall thickness, print orientation, and
+        ultimately replaced stressed ball joints with reinforced through-holes and a new coupler
+        geometry.
+      </li>
+      <li>
+        <strong>Communication subsystem complexity.</strong> The original plan included full IMU-based
+        semi-autonomous flight with switchable manual/auto modes via an ESP32 + nRF24L01 link. The
+        final prototype flew under manual control only — full autonomy was descoped to keep the
+        prototype flying within the project timeline.
+      </li>
+      <li>
+        <strong>Wing material trade-off.</strong> Carbon fiber was preferred for stiffness-to-weight
+        ratio but was difficult to source locally. Tested rigid mylar, flexible mylar, and a stiffer
+        final variant; settled on the flexible membrane because it produces a smoother average lift
+        profile per flapping cycle.
+      </li>
+    </ul>
+
+    <h4>THE LESSON</h4>
+    <p>
+      This project was the first time I had to coordinate structural FEA, aerodynamic simulation,
+      mechanical prototyping, and embedded communication into a single working system — and the first
+      time I discovered that the failure modes of a <em>simulation</em> are just as interesting as the
+      failure modes of the physical hardware. That realization shaped everything I've built since.
+    </p>
+  </div>
+
+  <div class="tab-pane" id="fw-mech">
+    <h4>MECHANICAL ARCHITECTURE</h4>
+    <ul>
+      <li><strong>Wingspan:</strong> ~110 cm · <strong>root chord:</strong> ~20 cm · <strong>skeleton:</strong> 40 cm</li>
+      <li><strong>Tail:</strong> ~18 cm radius, ~20° deflection range, servo-actuated</li>
+      <li><strong>Gearbox:</strong> 1:14 multi-stage — pinion, intermediate, output gear</li>
+      <li><strong>Final weight:</strong> 4.3 N including 7.4 V battery and brushless motor</li>
+      <li><strong>Motor:</strong> 1000 kV brushless at 7.4 V, driving 44,000 °/s at the motor shaft</li>
+    </ul>
+
+    <h4>STRUCTURAL ANALYSIS</h4>
+    <ul>
+      <li><strong>MSC Adams multibody dynamics</strong> used to predict torque and force on ball joints and brackets throughout the flapping stroke</li>
+      <li><strong>Topology optimization</strong> on the output gear to remove mass without compromising tooth strength</li>
+      <li><strong>ANSYS static structural FEA</strong> validated the redesigned brackets — deformation within acceptable limits under peak predicted loads</li>
+    </ul>
+
+    <h4>AERODYNAMIC ANALYSIS</h4>
+    <ul>
+      <li><strong>Thin airfoil theory</strong> as a first-pass estimate for wing lift and drag</li>
+      <li><strong>Vortex Lattice Method</strong> for finite-wing effects across flapping frequencies</li>
+      <li><strong>ANSYS 2D CFD</strong> (parameterized by chord length, angle of attack, and relative velocity) to model the lift curve at representative cross-sections</li>
+      <li><strong>ANSYS 3D simulations</strong> for tail-induced yaw, pitch, and roll moments at different tail positions</li>
+      <li><strong>Key finding:</strong> 6 Hz is the optimal flapping frequency — above this, the wing structure approaches its first vibration mode</li>
+    </ul>
+
+    <div class="img-placeholder" style="margin-top:12px">
+      <img src="assets/images/flapping-wing/cad-render.png" alt="Ornithopter CAD render"
+           onerror="this.style.display='none'; this.parentNode.textContent='CAD render — assets/images/flapping-wing/cad-render.png';">
+    </div>
+  </div>
+
+  <div class="tab-pane" id="fw-ros">
+    <h4>CUSTOM AERODYNAMIC PLUGINS</h4>
+    <p>
+      Built four custom Gazebo plugins that apply forces directly to the flapping model at every
+      simulation step, driven by real coefficients computed offline in ANSYS and VLM:
+    </p>
+    <pre class="code"><span class="cm">/* Plugin set — one per physical effect */</span>
+flapping_controller_plugin    <span class="cm">// Wing motion driven by motor velocity</span>
+pitching_controller_plugin    <span class="cm">// Tail pitch → pitching moment</span>
+rolling_controller_plugin     <span class="cm">// Asymmetric flapping → roll moment</span>
+lift_drag_plugin              <span class="cm">// Aerodynamic forces per flap phase</span></pre>
+
+    <h4>AERODYNAMIC MODEL INTEGRATION</h4>
+    <p>
+      Velocity data from the Adams multibody simulation fed a numerical lift approximation using
+      the Vortex Lattice Method. The resulting per-flap-phase force curves were then applied inside
+      Gazebo as alternating forces — mimicking the actual flapping strokes — with the key insight that
+      <strong>membrane-wing aeroelasticity produces a net positive average lift per cycle</strong>,
+      unlike a rigid wing.
+    </p>
+
+    <h4>SIMULATION GUI</h4>
+    <p>
+      A custom flight simulator GUI (Python + Tkinter) provided live sliders for throttle, pitch,
+      and roll during Gazebo simulation — with real-time readout of height, acceleration, velocity,
+      and flapping frequency.
+    </p>
+
+    <div class="img-placeholder" style="margin-top:12px">
+      <img src="assets/images/flapping-wing/gazebo-sim.png" alt="Gazebo simulation"
+           onerror="this.style.display='none'; this.parentNode.textContent='Gazebo sim — assets/images/flapping-wing/gazebo-sim.png';">
+    </div>
+
+    <h4>TEST BENCH</h4>
+    <p>
+      A three-load-cell test bench (10 kg range each, Arduino-based data acquisition, Python GUI)
+      measured vertical and horizontal force at takeoff. The bench validated the numerically predicted
+      lift and drag curves against physical measurement, closing the loop between simulation and
+      reality.
+    </p>
+  </div>
+
+  <div class="project-footer">
+    <span>Custom ROS+Gazebo aerodynamic plugins — an alternative to the MATLAB/Simulink convention in flapping-wing research.</span>
+    <span class="metric">110 cm · 6 Hz · custom aero plugins · open source</span>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

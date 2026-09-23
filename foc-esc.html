@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bare-Metal Sensorless FOC ESC — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000/STM32G431-FOC-ESC" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="project">
+  <div class="project-header">
+    <div class="project-title">Bare-Metal Sensorless FOC ESC Kernel</div>
+    <div class="project-meta">2024 – Present · STM32G431 · Independent Research · <a href="https://github.com/CK20000/STM32G431-FOC-ESC" target="_blank">GitHub ↗</a></div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">loop:</span><span class="v">24 kHz</span></span>
+      <span class="spec"><span class="k">cycle:</span><span class="v">2,728 clocks</span></span>
+      <span class="spec"><span class="k">time:</span><span class="v">16.05 µs</span></span>
+      <span class="spec"><span class="k">rpm:</span><span class="v">30,000+</span></span>
+      <span class="spec"><span class="k">inductance:</span><span class="v">31 µH</span></span>
+      <span class="spec"><span class="k">resistance:</span><span class="v">90 mΩ</span></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="foc-overview">Overview</button>
+    <button class="tab" data-tab="foc-postmortem">Post-Mortem</button>
+    <button class="tab" data-tab="foc-hardware">Hardware</button>
+    <button class="tab" data-tab="foc-firmware">Firmware</button>
+  </div>
+
+  <div class="tab-pane active" id="foc-overview">
+    <div class="pane-split">
+      <div>
+        <h4>WHAT IT DOES</h4>
+        <p>
+          A high-frequency sensorless field-oriented control (FOC) drive engine optimized for low-inductance
+          UAV motors. Runs a rigid 24 kHz control loop on an STM32G431 with a State-Space Flux Observer,
+          hardware CORDIC acceleration, predictive phase advance, and D-axis feedforward — all inside a
+          50 µs hard-sync budget.
+        </p>
+        <p>
+          Telemetry: 49-byte binary struct streamed at 1 kHz over a 2 Mbaud UART, with a custom PyQtGraph
+          GUI visualizing I<sub>d</sub>, I<sub>q</sub>, V<sub>d</sub>, V<sub>q</sub>, and phase-lag angle in real time.
+        </p>
+        <h4>WHY IT'S PUBLIC</h4>
+        <p>
+          The repository doubles as an engineering post-mortem — documenting not just what works, but
+          <em>why</em> standard textbook industrial algorithms fail under microhenry, ultra-low-mass
+          operating conditions. Failure modes shared so the FOC community can avoid them.
+        </p>
+      </div>
+      <div>
+        <div class="img-placeholder">
+          <img src="assets/images/foc-esc/pcb-render.jpg" alt="FOC ESC PCB render"
+               onerror="this.style.display='none'; this.parentNode.textContent='PCB render — assets/images/foc-esc/pcb-render.jpg';">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane" id="foc-postmortem">
+    <h4 class="danger">THE FAILURE MODE</h4>
+    <p>
+      At 40–50% throttle, a 40 µs computational latency combined with reactive back-EMF cross-coupling
+      (V = −ω · L · I<sub>q</sub>) forces massive D-axis current spikes that derail the flux observer.
+      The motor <strong>crashes into "the jerk"</strong> — a non-linear instability boundary unique
+      to microhenry, ultra-low-mass environments.
+    </p>
+
+    <h4 class="warn">TEXTBOOK FAILURES DOCUMENTED</h4>
+    <ul>
+      <li>
+        <strong>ADC slew limiting</strong> — clamping di/dt starved the observer. A 31 µH coil at 12 V
+        naturally generates ~387,000 A/s rise rate; typical hardware anti-aliasing filters physically
+        cannot pass this, so the observer reads a clipped current waveform.
+      </li>
+      <li>
+        <strong>Digital flywheel PLLs</strong> — inertial filters introduced excessive mathematical phase
+        lag, failing to track the sharp mechanical acceleration of light drone props. The estimator
+        converges to a "smooth" wrong answer.
+      </li>
+      <li>
+        <strong>48 kHz PWM / 24 kHz FOC</strong> — gate driver deadtime (~0.5 µs) physically swallows a
+        significant fraction of low-throttle pulses (2.08 µs wide at 10% throttle), starving the stator
+        of the voltage the observer expects. Result: observer-model divergence.
+      </li>
+    </ul>
+
+    <h4>THE FIX</h4>
+    <p>
+      Reverted to a strictly synchronous 1:1 execution framework — 24 kHz PWM / 24 kHz FOC — preserving
+      physical pulse widths. Added predictive phase advance (aiming voltage where the rotor
+      <em>will</em> be, ~40 µs forward), D-axis feedforward (−ω · L · I<sub>q</sub>) to cancel cross-coupling,
+      and an alpha-beta tracking filter as a "digital flywheel" (predictive momentum instead of
+      lag-inducing low-pass).
+    </p>
+  </div>
+
+  <div class="tab-pane" id="foc-hardware">
+    <h4>POWER STAGE</h4>
+    <ul>
+      <li>Discrete IR2101 gate drivers · AOT418 MOSFETs</li>
+      <li>6N137 optocoupler isolation between logic and power stage</li>
+      <li>2 mΩ low-side shunts + AD8418 current sense amplifiers</li>
+      <li>MP1584 buck converter (12 V → 5 V)</li>
+    </ul>
+
+    <h4>ANALOG FRONT END</h4>
+    <ul>
+      <li>BEMF RC filter: 172.1 kHz cutoff → deterministic <strong>7.9° phase lag</strong>, compensated in firmware</li>
+      <li>Injected ADC sampling aligned to PWM center-count events (quiet zone) to read clean phase currents</li>
+      <li>Hardware deadtime physically characterized at 900 ns</li>
+    </ul>
+
+    <div class="img-placeholder" style="margin-top:12px">
+      <img src="assets/images/foc-esc/board-photo.jpg" alt="FOC ESC assembled board"
+           onerror="this.style.display='none'; this.parentNode.textContent='Board photo — assets/images/foc-esc/board-photo.jpg';">
+    </div>
+  </div>
+
+  <div class="tab-pane" id="foc-firmware">
+    <h4>5-STAGE SPOOLING SEQUENCE</h4>
+    <pre class="code"><span class="cm">// OFF → CALIBRATE → ALIGN → RAMP → BLEND → CLOSED_LOOP_FOC</span>
+<span class="kw">enum</span> State { OFF, CALIBRATE, ALIGN, OPEN_LOOP_RAMP,
+             FOC_BLEND, CLOSED_LOOP_FOC };</pre>
+
+    <h4>PREDICTIVE PHASE ADVANCE</h4>
+    <p>Compensates the ~40 µs CPU + PWM hardware delay by aiming voltage where the rotor <em>will</em> be:</p>
+    <pre class="code">theta_cmd = theta_est + omega_est * <span class="num">40e-6</span>f;</pre>
+
+    <h4>D-AXIS FEEDFORWARD</h4>
+    <p>Dynamic cross-coupling cancellation, mapped directly into the Inverse Park Transform:</p>
+    <pre class="code">Vd_ff = -omega_est * Ls * Iq;</pre>
+
+    <h4>TRACE TIMING</h4>
+    <p>
+      Core control loop executes in exactly <strong>2,728 clock cycles</strong> at the current clock speed:
+      <strong>16.05 µs total</strong> — well within the 50 µs maximum budget of the 24 kHz loop.
+    </p>
+  </div>
+
+  <div class="project-footer">
+    <span>Engineering post-mortem shared publicly — failure modes as community knowledge.</span>
+    <span class="metric">16.05 µs · 30k RPM · 0 hardcoded tuning</span>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
