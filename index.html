@@ -22,12 +22,11 @@
 </nav>
 
 <header class="hero">
-  <h1>I build systems that <span class="accent">trace from silicon to simulation</span>.</h1>
-  <div class="subtitle">Mechanical Engineering (Mechatronics) · University of Moratuwa · GPA 3.79 · Best Paper MERCon 2026</div>
+  <h1>Hardware, firmware, and the <span class="accent">physics in between</span>.</h1>
+  <div class="subtitle">Mechanical engineer (Mechatronics) · University of Moratuwa, Sri Lanka</div>
   <p class="bio">
-    Bare-metal firmware, custom PCB design, physics-accurate simulation, and hardware-in-the-loop validation —
-    from a 24 kHz sensorless FOC kernel for UAV motors to an open-source digital twin that auto-generates
-    SPICE netlists from KiCad. Every number below traces from a real component through real firmware through real physics.
+    My work sits where hardware, firmware, and physics have to agree — sensorless motor control for
+    UAVs, real-time PCB simulation, and a machine-vision tool for point-of-care blood diagnostics.
   </p>
   <div class="links">
     <a href="cv.pdf" target="_blank">Download CV</a>
@@ -36,11 +35,55 @@
   </div>
 </header>
 
-<div class="section-label">Selected Projects</div>
+<!-- ============================== UNDERGRADUATE ============================== -->
+<div class="section-label">Undergraduate Projects</div>
+
+<div class="project-grid">
+
+  <a class="project-card" href="pcv-analyzer.html">
+    <div class="card-image">
+      <img src="assets/images/pcv-analyzer/instrument.jpg" alt="Vision-based PCV analyzer instrument"
+           onerror="this.style.display='none';">
+    </div>
+    <h3>Vision-Based PCV Analyzer</h3>
+    <div class="card-meta">Final Year Research · Best Paper MERCon 2026</div>
+    <div class="card-desc">Fully integrated instrument replacing manual microhematocrit reading with deep-learning segmentation. Lidless passively-retaining rotor, closed-loop PID speed control, clinical validation.</div>
+    <div class="card-specs">
+      <span class="card-tag">1.535 pp MAE</span>
+      <span class="card-tag">78% CLIA</span>
+      <span class="card-tag">patent pending</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+  <a class="project-card" href="flapping-wing.html">
+    <div class="card-image">
+      <img src="assets/images/flapping-wing/final-model.jpg" alt="Flapping-wing robot final prototype"
+           onerror="this.style.display='none';">
+    </div>
+    <h3>Flapping-Wing Robot</h3>
+    <div class="card-meta">Full-Stack Design, Simulation &amp; Prototype</div>
+    <div class="card-desc">Complete bio-inspired ornithopter — mechanical design, ANSYS + Adams simulation, custom ROS+Gazebo aerodynamic plugins, ESP32 comms, and a load-cell test bench for force validation.</div>
+    <div class="card-specs">
+      <span class="card-tag">ROS+Gazebo</span>
+      <span class="card-tag">Custom aero plugins</span>
+      <span class="card-tag">Open source</span>
+    </div>
+    <div class="card-cta">view project</div>
+  </a>
+
+</div>
+
+<!-- ============================== INDEPENDENT ============================== -->
+<div class="section-label">Independent Research</div>
 
 <div class="project-grid">
 
   <a class="project-card" href="digital-twin.html">
+    <div class="card-image">
+      <img src="assets/images/digital-twin/dashboard.png" alt="Unified PCB digital twin dashboard"
+           onerror="this.style.display='none';">
+    </div>
     <h3>KiCad PCB Digital Twin</h3>
     <div class="card-meta">2025 – Present · Independent Research</div>
     <div class="card-desc">Physics-accurate digital twin that auto-generates a complete ngspice netlist from any <code>.kicad_pcb</code> file. Real firmware on virtual MCU, live thermal and current rendering.</div>
@@ -53,6 +96,10 @@
   </a>
 
   <a class="project-card" href="foc-esc.html">
+    <div class="card-image">
+      <img src="assets/images/foc-esc/prototype.jpg" alt="FOC ESC prototype board"
+           onerror="this.style.display='none';">
+    </div>
     <h3>Bare-Metal Sensorless FOC ESC</h3>
     <div class="card-meta">2024 – Present · STM32G431</div>
     <div class="card-desc">High-frequency FOC drive engine for low-inductance UAV motors. State-Space Flux Observer with hardware CORDIC acceleration, running a rigid 24 kHz loop at 30,000+ RPM.</div>
@@ -65,37 +112,17 @@
   </a>
 
   <a class="project-card" href="h743-flight-controller.html">
-    <h3>STM32H743 Flight Controller</h3>
-    <div class="card-meta">2026 – Present · Bare-Metal Betaflight Port</div>
+    <div class="card-image">
+      <img src="assets/images/h743-fc/fc.jpg" alt="H743 flight controller carrier board"
+           onerror="this.style.display='none';">
+    </div>
+    <h3>Betaflight Flight Controller</h3>
+    <div class="card-meta">2026 – Present · Bare-Metal H743 Port</div>
     <div class="card-desc">Custom target files and 4-layer carrier board enabling standard Betaflight firmware on a generic industrial H743 devboard — with three critical silicon-level bug fixes documented.</div>
     <div class="card-specs">
       <span class="card-tag">STM32H743</span>
       <span class="card-tag">Bare-metal port</span>
       <span class="card-tag">4-layer PCB</span>
-    </div>
-    <div class="card-cta">view project</div>
-  </a>
-
-  <a class="project-card" href="pcv-analyzer.html">
-    <h3>Vision-Based PCV Analyzer</h3>
-    <div class="card-meta">2021 – 2025 · Final Year Research · Best Paper MERCon 2026</div>
-    <div class="card-desc">Fully integrated instrument replacing manual microhematocrit reading with deep-learning segmentation. Lidless passively-retaining rotor, closed-loop PID speed control, clinical validation.</div>
-    <div class="card-specs">
-      <span class="card-tag">1.535 pp MAE</span>
-      <span class="card-tag">78% CLIA</span>
-      <span class="card-tag">patent pending</span>
-    </div>
-    <div class="card-cta">view project</div>
-  </a>
-
-  <a class="project-card" href="flapping-wing.html">
-    <h3>Flapping-Wing Robot</h3>
-    <div class="card-meta">2023 – 2024 · Full-Stack Design, Simulation & Prototype</div>
-    <div class="card-desc">Complete bio-inspired ornithopter — mechanical design, ANSYS + Adams simulation, custom ROS+Gazebo aerodynamic plugins, ESP32 comms, and a load-cell test bench for force validation.</div>
-    <div class="card-specs">
-      <span class="card-tag">ROS+Gazebo</span>
-      <span class="card-tag">Custom aero plugins</span>
-      <span class="card-tag">Open source</span>
     </div>
     <div class="card-cta">view project</div>
   </a>
