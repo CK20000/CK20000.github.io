@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isolated Half-Bridge Motor Driver — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/half-bridge.jpg" alt="Isolated half-bridge motor driver"
+         onerror="this.style.display='none'; this.parentNode.textContent='Half-bridge — assets/images/hardware/half-bridge.jpg';">
+  </div>
+  <div class="hero-caption">Galvanically isolated half-bridge — logic and power domains separated by 6N137 optocouplers.</div>
+
+  <div class="project-title-block">
+    <h1>Isolated Half-Bridge Motor Driver</h1>
+    <div class="meta">2025 · KiCad · Galvanic PWM isolation + bidirectional current sensing</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">gate driver:</span><span class="v">IR2101</span></span>
+      <span class="spec"><span class="k">mosfets:</span><span class="v">2× IRFZ44N</span></span>
+      <span class="spec"><span class="k">isolation:</span><span class="v">2× 6N137</span></span>
+      <span class="spec"><span class="k">sensing:</span><span class="v">AD8418 + R002</span></span>
+      <span class="spec"><span class="k">ref:</span><span class="v">1.65 V buffered</span></span>
+    </div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A single half-bridge motor driver designed to safely interface a microcontroller with high-voltage
+    motor rails. The logic side (MCU signals) and power side (motor rail) are fully isolated through
+    high-speed optocouplers, eliminating ground bounce and protecting the MCU from high <em>di/dt</em>
+    switching events.
+  </p>
+
+  <h2 class="section-h2">Key features</h2>
+  <ul>
+    <li><strong>Bootstrap high-side drive</strong> — 1N5819 diode + 1 µF cap, requires periodic low-side pulses (no 100% duty cycle)</li>
+    <li><strong>Galvanic isolation</strong> — 2× 6N137 high-speed optocouplers between logic and power</li>
+    <li><strong>Precision current sensing</strong> — AD8418 bidirectional amplifier across a 2 mΩ shunt, heavily filtered (10 Ω / 10 nF / 1 nF)</li>
+    <li><strong>Center-biased reference</strong> — buffered 1.65 V rail via MCP6002 for symmetric bidirectional measurement</li>
+    <li><strong>1000 µF bulk smoothing</strong> — handles switching transients on the power rail</li>
+  </ul>
+
+  <div class="project-cta">
+    <a href="https://github.com/CK20000" target="_blank">→ Source on GitHub</a>
+    <a href="index.html">← all projects</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>

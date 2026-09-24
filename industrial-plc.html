@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STM32F407 Industrial PLC — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/plc.jpg" alt="STM32F407 modular industrial PLC"
+         onerror="this.style.display='none'; this.parentNode.textContent='Industrial PLC — assets/images/hardware/plc.jpg';">
+  </div>
+  <div class="hero-caption">Ruggedized industrial PLC platform — 8 opto-isolated inputs, 8 outputs, 4 PWM channels, RS-485, and Wi-Fi.</div>
+
+  <div class="project-title-block">
+    <h1>STM32F407 Modular Industrial PLC</h1>
+    <div class="meta">2024 · STM32F407VET6 · Student-accessible industrial automation platform</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">mcu:</span><span class="v">STM32F407VET6</span></span>
+      <span class="spec"><span class="k">clock:</span><span class="v">168 MHz</span></span>
+      <span class="spec"><span class="k">digital I/O:</span><span class="v">8 in / 8 out</span></span>
+      <span class="spec"><span class="k">analog:</span><span class="v">8× 0–10 V in · 2 DAC out</span></span>
+      <span class="spec"><span class="k">comms:</span><span class="v">RS-485 · Wi-Fi</span></span>
+    </div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A ruggedized, student-accessible PLC platform built around the STM32F407VET6. Designed for
+    educational lab environments — combines real industrial communication protocols (Modbus RTU over
+    RS-485) with proper field isolation so students can safely learn industrial automation on hardware
+    that behaves like the real thing.
+  </p>
+
+  <h2 class="section-h2">Key features</h2>
+  <ul>
+    <li><strong>Full field isolation</strong> — 8 opto-isolated digital inputs (PC817), 8 opto-isolated outputs, and 4 isolated PWM channels (6N137)</li>
+    <li><strong>Analog interface</strong> — 8 buffered 0–10 V inputs (resistor dividers + Zener clamping) and 2 DAC outputs via LM358 op-amp stage</li>
+    <li><strong>Industrial comms</strong> — half-duplex RS-485 (MAX3485) with selectable 120 Ω termination; Wi-Fi via ESP-12S on USART3</li>
+    <li><strong>Expansion</strong> — I2C (OLED/peripherals), SPI2 (external IO modules), onboard 8 Mbit SPI flash for data logging</li>
+    <li><strong>Debug + DFU</strong> — 4-pin SWD header and USB-C DFU interface</li>
+  </ul>
+
+  <div class="project-cta">
+    <a href="https://github.com/CK20000" target="_blank">→ Source on GitHub</a>
+    <a href="index.html">← all projects</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
