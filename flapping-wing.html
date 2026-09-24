@@ -21,284 +21,277 @@
   </div>
 </nav>
 
-<main>
+<main class="project-page">
 
-<section class="project">
-  <div class="project-header">
-    <div class="project-title">Flapping-Wing Robot — Full-Stack Design, Simulation &amp; Prototype</div>
-    <div class="project-meta">2023 – 2024 · Semester 5 Mechatronics Project · University of Moratuwa · <a href="https://github.com/CK20000" target="_blank">GitHub ↗</a></div>
+  <!-- ============================== HERO ============================== -->
+  <div class="hero-image">
+    <img src="assets/images/flapping-wing/final-model.jpg" alt="Final flapping-wing prototype"
+         onerror="this.style.display='none'; this.parentNode.textContent='Final prototype — assets/images/flapping-wing/final-model.jpg';">
+  </div>
+  <div class="hero-caption">Final prototype — 110 cm wingspan, 4.3 N, single-wing mechanism with a 1:14 gearbox and servo-actuated tail.</div>
+
+  <!-- ============================== TITLE ============================== -->
+  <div class="project-title-block">
+    <h1>Flapping-Wing Robot</h1>
+    <div class="meta">2023 – 2024 · Semester 5 Mechatronics Project · University of Moratuwa · <a href="https://github.com/CK20000" target="_blank">GitHub ↗</a></div>
     <div class="project-specs">
       <span class="spec"><span class="k">wingspan:</span><span class="v">110 cm</span></span>
-      <span class="spec"><span class="k">root chord:</span><span class="v">20 cm</span></span>
       <span class="spec"><span class="k">weight:</span><span class="v">4.3 N</span></span>
       <span class="spec"><span class="k">gearbox:</span><span class="v">1:14 (3-stage)</span></span>
       <span class="spec"><span class="k">motor:</span><span class="v">1000 kV @ 7.4 V</span></span>
-      <span class="spec"><span class="k">optimal flap:</span><span class="v">6 Hz</span></span>
+      <span class="spec"><span class="k">flap freq:</span><span class="v">6 Hz</span></span>
+      <span class="spec"><span class="k">sim:</span><span class="v">ROS + Gazebo</span></span>
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="fw-overview">Overview</button>
-    <button class="tab" data-tab="fw-design">Design &amp; Analysis</button>
-    <button class="tab" data-tab="fw-sim">Simulation Pipeline</button>
-    <button class="tab" data-tab="fw-postmortem">Post-Mortem</button>
-  </div>
+  <!-- ============================== WHAT IT IS ============================== -->
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A complete bio-inspired ornithopter — designed, simulated, fabricated, and force-validated end-to-end.
+    From a Solid Edge assembly through multibody dynamics and CFD through a custom ROS+Gazebo simulator
+    through a physical prototype flying on an ESP32-controlled radio link.
+  </p>
+  <p>
+    This was my turning point. The first project where I carried a system from CAD through FEA, CFD,
+    simulation, embedded communication, and physical prototyping — and the first time I discovered that
+    the failure modes of a <em>simulation</em> are just as instructive as the failure modes of hardware.
+  </p>
 
-  <div class="tab-pane active" id="fw-overview">
-    <div class="pane-split">
-      <div>
-        <h4>WHAT IT DOES</h4>
-        <p>
-          A complete bio-inspired ornithopter — designed, simulated, fabricated, and force-validated
-          end-to-end. From a Solid Edge assembly through multibody dynamics and CFD through a custom
-          ROS+Gazebo simulator through a physical prototype flying on an ESP32-controlled radio link.
-        </p>
-        <p>
-          110 cm wingspan, 4.3 N final weight, single-wing mechanism with a 1:14 multi-stage gearbox,
-          servo-actuated tail for roll/pitch/yaw authority, and a three-load-cell test bench that closed
-          the loop between numerical prediction and physical measurement.
-        </p>
+  <!-- ============================== DESIGN ============================== -->
+  <h2 class="section-h2">Design</h2>
+  <p>
+    Wing geometry was derived from avian scaling laws, not arbitrary choice. An elliptical planform
+    was selected after comparing loading characteristics against five biological wing types. The
+    <strong>single-wing mechanism</strong> was chosen over a folding 4-bar linkage to reduce part count
+    and keep the structure light enough to hit the target flap frequency without exciting its first
+    vibration mode.
+  </p>
 
-        <h4>WHY IT MATTERS TO ME</h4>
-        <p>
-          This was my turning point. It was the first time I carried a system from CAD through FEA, CFD,
-          multibody simulation, embedded communication, and physical prototyping — and the first time I
-          discovered that the failure modes of a <em>simulation</em> are just as instructive as the
-          failure modes of hardware. Everything I've built since traces back to problems I first
-          encountered here.
-        </p>
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/wing-classification.jpg" alt="Biological wing classification"
+             onerror="this.style.display='none'; this.parentNode.textContent='Wing classification — assets/images/flapping-wing/wing-classification.jpg';">
       </div>
-      <div>
-        <div class="img-placeholder">
-          <img src="assets/images/flapping-wing/prototype.jpg" alt="Flapping-wing prototype"
-               onerror="this.style.display='none'; this.parentNode.textContent='Prototype photo — assets/images/flapping-wing/prototype.jpg';">
-        </div>
+      <div class="media-caption">
+        <strong>Wing selection</strong>
+        Five avian profiles compared — elliptical (flycatcher) chosen for minimum induced drag at the root.
       </div>
     </div>
-  </div>
 
-  <div class="tab-pane" id="fw-design">
-    <h4>INITIAL SIZING — FROM BIOLOGY TO NUMBER</h4>
-    <p>
-      Wing geometry was derived from avian scaling laws rather than arbitrary choice. Aspect ratio and
-      target flapping frequency were computed from first principles before any CAD:
-    </p>
-    <pre class="code"><span class="cm">// Aspect ratio from span and planform area</span>
-AR = span² / area
-
-<span class="cm">// Required flapping frequency (empirical ornithopter scaling law)</span>
-f_required = (1.08 / span) · (m²g² / (ρ² · area))^(1/4)
-
-<span class="cm">// Motor frequency given gearbox reduction and supply voltage</span>
-f_motor = (MR / GR) · V</pre>
-    <p>
-      An <strong>elliptical wing planform</strong> was selected after comparing loading characteristics
-      against five biological wing types (flycatcher, swallow, albatross, hawk, generic soaring). The
-      elliptical profile minimizes induced drag at the root, which matters most during the high-lift
-      low-speed phase of each flap cycle.
-    </p>
-
-    <h4>WING MECHANISM — WHY SINGLE-WING, NOT FOLDING</h4>
-    <p>
-      Three candidate mechanisms were modeled: folding wing with 4-bar linkage (biomimetic but complex),
-      and single-piece wing (simple, robust). The <strong>single-wing structure</strong> was chosen to
-      reduce part count, minimize fuselage integration complexity, and keep the wing structure light
-      enough to hit the target flap frequency without exciting its first vibration mode.
-    </p>
-    <p>
-      Trade-off honestly stated: this sacrifices the folding mechanics of avian flight, which limits
-      peak efficiency at high speeds. For a first-generation prototype, reliability won over theoretical
-      performance.
-    </p>
-
-    <h4>GEARBOX — 1:14 MULTI-STAGE</h4>
-    <p>
-      Three-stage reduction (pinion → intermediate → output) was designed in Solid Edge's gear module
-      with a target reduction of 1:14. This provides the torque multiplication needed to drive the wing
-      linkage against aerodynamic damping while keeping the motor in its efficient RPM band.
-    </p>
-    <ul>
-      <li>Structural mass reduction achieved through wall thinning and topology-optimized output gear</li>
-      <li>Final base frame: 3 mm thick, 45 mm long, printed in PLA</li>
-      <li>Coupler links redesigned twice — first version failed cyclic fatigue under flapping loads</li>
-    </ul>
-
-    <h4>STRUCTURAL VALIDATION (MSC ADAMS)</h4>
-    <p>
-      Multibody dynamics simulations predicted torque and force on every joint and bracket across a full
-      flapping stroke. Results drove material and geometry iteration:
-    </p>
-    <ul>
-      <li><strong>Ball joints:</strong> peak force magnitudes reached ±0.15 N — well within printed joint capacity after redesign</li>
-      <li><strong>Brackets:</strong> peak torque predictions guided ribbed geometries that eliminated the first failure mode (delamination at layer lines)</li>
-      <li><strong>Output gear:</strong> topology optimization removed ~30% of mass while keeping stress below the PLA yield derated for FDM anisotropy</li>
-    </ul>
-
-    <h4>AERODYNAMIC ANALYSIS</h4>
-    <p>
-      Two independent methods cross-validated each other:
-    </p>
-    <ul>
-      <li>
-        <strong>Vortex Lattice Method</strong> — first-pass estimate of lift, drag, and thrust curves
-        across the flapping cycle. Converged for low frequencies but broke down at high flapping rates
-        (see Post-Mortem).
-      </li>
-      <li>
-        <strong>ANSYS 2D CFD</strong> — parameterized by chord length, angle of attack, and relative
-        velocity; cross-sections sampled at multiple spanwise locations. Used as the ground truth where
-        VLM failed.
-      </li>
-      <li>
-        <strong>ANSYS 3D CFD</strong> on the full wing was attempted but deemed computationally
-        impractical for the iterative loop — 2D results were within the VLM envelope and adopted.
-      </li>
-    </ul>
-
-    <h4>TAIL CONTROL AUTHORITY</h4>
-    <p>
-      ANSYS simulations of the servo-actuated tail at multiple positions quantified yaw, pitch, and roll
-      moments as a function of flight velocity. Key result: <strong>single tail rotation produces
-      substantial roll authority with minor yaw</strong>; double rotation combinations provide the
-      independent pitch/yaw mixing needed for coordinated turns.
-    </p>
-
-    <div class="img-placeholder" style="margin-top:12px">
-      <img src="assets/images/flapping-wing/cad-render.png" alt="Ornithopter CAD render"
-           onerror="this.style.display='none'; this.parentNode.textContent='CAD render — assets/images/flapping-wing/cad-render.png';">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/cad-render.jpg" alt="Ornithopter CAD render"
+             onerror="this.style.display='none'; this.parentNode.textContent='CAD render — assets/images/flapping-wing/cad-render.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>CAD assembly</strong>
+        Solid Edge model — bird skeleton base, gear bases, brackets, gears, ball joints, and wing links.
+      </div>
     </div>
   </div>
 
-  <div class="tab-pane" id="fw-sim">
-    <h4>WHY ROS+GAZEBO INSTEAD OF MATLAB/SIMULINK</h4>
-    <p>
-      The convention in flapping-wing literature is to simulate in MATLAB/Simulink. That is a
-      closed-loop workflow tied to a proprietary toolchain, and it produces simulations that are
-      difficult to integrate with real robot middleware (ROS), cannot be easily shared with the wider
-      robotics community, and are usually re-implemented from scratch by every researcher.
-    </p>
-    <p>
-      This project built the aerodynamic model directly in <strong>ROS + Gazebo</strong>, so the
-      simulation lives in the same middleware ecosystem as modern UAV stacks. The ROS package is
-      published open-source as an alternative path for the robotics community.
-    </p>
+  <!-- ============================== GEARBOX ============================== -->
+  <h2 class="section-h2">The gearbox</h2>
+  <p>
+    Three-stage reduction (pinion → intermediate → output) designed in Solid Edge's gear module.
+    Torque multiplication to drive the wing linkage against aerodynamic damping, while keeping the
+    motor in its efficient RPM band.
+  </p>
 
-    <h4>CUSTOM AERODYNAMIC PLUGINS</h4>
-    <p>
-      Four plugins apply forces directly to the flapping model at each simulation step:
-    </p>
-    <pre class="code">flapping_controller_plugin     <span class="cm">// Wing motion driven by motor velocity</span>
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/flapping-wing/gearbox.jpg" alt="Final gear arrangement — 1:14 reduction"
+           onerror="this.style.display='none'; this.parentNode.textContent='Gearbox — assets/images/flapping-wing/gearbox.jpg';">
+    </div>
+    <div class="media-caption">Final gear arrangement — 1:14 total reduction, base frame 3 mm × 45 mm, PLA.</div>
+  </div>
+
+  <!-- ============================== STRUCTURAL VALIDATION ============================== -->
+  <h2 class="section-h2">Structural validation</h2>
+  <p>
+    MSC Adams multibody dynamics predicted torque and force on every joint and bracket across a full
+    flapping stroke. Results drove material and geometry iteration before a single part was printed.
+    Peak ball-joint forces reached ±0.15 N. Topology optimization removed ~30% of mass from the output
+    gear while keeping stress below the PLA yield derated for FDM anisotropy.
+  </p>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/flapping-wing/adams.jpg" alt="ADAMS multibody simulation"
+           onerror="this.style.display='none'; this.parentNode.textContent='ADAMS model — assets/images/flapping-wing/adams.jpg';">
+    </div>
+    <div class="media-caption">ADAMS multibody model — force and torque extraction at every joint through the flap cycle.</div>
+  </div>
+
+  <!-- ============================== AERODYNAMICS ============================== -->
+  <h2 class="section-h2">Aerodynamics</h2>
+  <p>
+    Two independent methods cross-validated each other. The Vortex Lattice Method gave a first-pass
+    estimate across the flapping cycle, ANSYS 2D CFD provided ground-truth lift and drag coefficients
+    at representative wing cross-sections. Where VLM converged, the two agreed — which gave confidence
+    to trust CFD alone at high flapping rates.
+  </p>
+
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/ansys-cfd.jpg" alt="ANSYS 2D CFD simulation"
+             onerror="this.style.display='none'; this.parentNode.textContent='ANSYS CFD — assets/images/flapping-wing/ansys-cfd.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>ANSYS 2D CFD</strong>
+        Parameterized by chord length, angle of attack, and relative velocity — sampled at multiple spanwise sections.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/vlm-plot.jpg" alt="Vortex Lattice Method lift/drag/thrust curves"
+             onerror="this.style.display='none'; this.parentNode.textContent='VLM results — assets/images/flapping-wing/vlm-plot.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>VLM force curves</strong>
+        Lift, drag, and thrust across the flapping cycle. Diverged above 4 Hz — see the post-mortem.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== SIMULATOR ============================== -->
+  <h2 class="section-h2">The simulator</h2>
+  <p>
+    Instead of MATLAB/Simulink, the aerodynamic model was built directly in <strong>ROS + Gazebo</strong> —
+    the same middleware ecosystem as modern UAV stacks. Four custom plugins apply forces to the
+    flapping model at each simulation step, driven by real coefficients computed offline in
+    ANSYS and VLM.
+  </p>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/flapping-wing/gazebo.jpg" alt="Gazebo simulation with flight simulator GUI"
+           onerror="this.style.display='none'; this.parentNode.textContent='Gazebo simulation — assets/images/flapping-wing/gazebo.jpg';">
+    </div>
+    <div class="media-caption">
+      Custom Python GUI drove the simulation live — throttle, pitch, and roll sliders with real-time
+      height, acceleration, velocity, and flapping frequency readout.
+    </div>
+  </div>
+
+  <h3 class="section-h3">Custom aerodynamic plugins</h3>
+<pre class="code">flapping_controller_plugin     <span class="cm">// Wing motion driven by motor velocity</span>
 pitching_controller_plugin     <span class="cm">// Tail pitch → pitching moment</span>
 rolling_controller_plugin      <span class="cm">// Asymmetric flapping → roll moment</span>
 lift_drag_plugin               <span class="cm">// Aerodynamic forces per flap phase</span></pre>
 
-    <h4>DATA PATH — FROM ADAMS TO GAZEBO</h4>
-    <p>
-      The aerodynamic forces applied inside Gazebo are not invented. They come from a chain of
-      simulations:
-    </p>
-    <ol style="margin: 0 0 14px 20px; font-size: 14px;">
-      <li>MSC Adams predicts wing center-of-mass velocities through the flapping stroke</li>
-      <li>Those velocities feed the Vortex Lattice Method to compute induced velocities on each wing panel</li>
-      <li>ANSYS 2D CFD provides ground-truth lift and drag coefficients at representative cross-sections</li>
-      <li>Resulting force curves are sampled per flap phase and applied inside Gazebo as alternating forces</li>
-    </ol>
-    <p>
-      The core insight exploited: <strong>membrane-wing aeroelasticity produces net positive average
-      lift per flap cycle</strong>, unlike a rigid wing which can produce zero net lift at certain
-      frequencies. This is why the flexible wing outperformed the rigid variant on the physical test
-      bench.
-    </p>
+  <p>
+    The core insight exploited: <strong>membrane-wing aeroelasticity produces net positive average lift
+    per flap cycle</strong>, unlike a rigid wing which can produce zero net lift at certain frequencies.
+    This was confirmed on the physical test bench — the flexible wing outperformed the rigid variant.
+  </p>
 
-    <h4>FLIGHT SIMULATOR GUI</h4>
-    <p>
-      A custom Python GUI drove the Gazebo simulation with live throttle, pitch, and roll sliders, plus
-      real-time readout of height, acceleration, velocity, and flapping frequency. The same GUI structure
-      was later reused to command the physical transmitter over RF, giving a single operator interface
-      for both simulation and hardware.
-    </p>
+  <!-- ============================== PROTOTYPE ============================== -->
+  <h2 class="section-h2">The prototype</h2>
+  <p>
+    Fabricated in stages: skeleton and gearbox first, then refined brackets and a replacement for the
+    original ball joints after the first version failed under cyclic flapping loads. A servo-actuated
+    tail manages yaw and pitch through asymmetric rotations.
+  </p>
 
-    <div class="img-placeholder" style="margin-top:12px">
-      <img src="assets/images/flapping-wing/gazebo-sim.png" alt="Gazebo simulation"
-           onerror="this.style.display='none'; this.parentNode.textContent='Gazebo sim — assets/images/flapping-wing/gazebo-sim.png';">
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/flapping-wing/prototype.jpg" alt="Assembled flapping-wing prototype"
+           onerror="this.style.display='none'; this.parentNode.textContent='Prototype — assets/images/flapping-wing/prototype.jpg';">
+    </div>
+    <div class="media-caption">Final assembly — BLDC motor, ESC, 7.4 V battery, receiver, and tail servo.</div>
+  </div>
+
+  <!-- ============================== TEST BENCH ============================== -->
+  <h2 class="section-h2">Test bench</h2>
+  <p>
+    Three load cells (10 kg range) with Arduino-based data acquisition measured vertical and horizontal
+    force at takeoff. The bench was the ground truth — where numerical prediction and physical
+    measurement disagreed, physical measurement won.
+  </p>
+
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/test-bench.jpg" alt="Load-cell test bench"
+             onerror="this.style.display='none'; this.parentNode.textContent='Test bench — assets/images/flapping-wing/test-bench.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Force test bench</strong>
+        Three load cells measure lift and drag at takeoff. Data logged through an Arduino to a live Python GUI.
+      </div>
     </div>
 
-    <h4>EXPERIMENTAL VALIDATION</h4>
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/flapping-wing/transmitter.jpg" alt="Custom ESP32 transmitter and receiver"
+             onerror="this.style.display='none'; this.parentNode.textContent='Transmitter/receiver — assets/images/flapping-wing/transmitter.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Custom radio link</strong>
+        ESP32 + nRF24L01 transmitter/receiver — designed for future IMU-based semi-autonomous modes.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================== POST-MORTEM ============================== -->
+  <h2 class="section-h2">The hard part</h2>
+  <p>
+    Every failure here was a mismatch between the assumptions of a tool and the physics of the real
+    system. The fix was never to force the tool to work — it was to recognize the mismatch and switch
+    approaches.
+  </p>
+
+  <div class="failure-block">
+    <h4>FAILURE · VLM CONVERGENCE AT HIGH FLAP FREQUENCIES</h4>
     <p>
-      A three-load-cell test bench (10 kg range each, Arduino-based data acquisition) measured vertical
-      and horizontal force at takeoff. The bench was the ground truth — where numerical prediction and
-      physical measurement disagreed, physical measurement won and drove the next iteration.
+      The Vortex Lattice Method worked cleanly at 2 Hz, degraded at 4 Hz, and produced divergent results
+      at <strong>6 Hz</strong> — the exact frequency the design needed to hit. Root cause: strongly
+      unsteady wake dynamics that the steady-state VLM formulation assumes away.
+    </p>
+    <p>
+      <strong>Fix:</strong> Hybrid approach — retained VLM for the low-frequency envelope, switched to
+      ANSYS 2D CFD at representative cross-sections for the high-frequency regime. Where the two
+      overlapped, they agreed.
     </p>
   </div>
 
-  <div class="tab-pane" id="fw-postmortem">
-    <h4 class="danger">FAILURE 1 — VLM CONVERGENCE AT HIGH FLAP FREQUENCIES</h4>
+  <div class="failure-block">
+    <h4>FAILURE · 3D-PRINTED STRUCTURAL FATIGUE</h4>
     <p>
-      The Vortex Lattice Method was the primary aerodynamic solver early in the project. It worked
-      cleanly at 2 Hz, degraded at 4 Hz, and produced divergent results at 6 Hz — the exact frequency
-      the design needed to hit. Root cause: strongly unsteady wake dynamics that the steady-state VLM
-      formulation assumes away.
+      FDM-printed PLA has anisotropic strength: strong in the print plane, weak at layer boundaries.
+      Early brackets and coupler links failed under cyclic flapping loads — not from peak stress, but
+      from fatigue along layer lines.
     </p>
     <p>
-      <strong>Fix:</strong> Hybrid approach. Retained VLM for low-frequency envelope estimation, switched
-      to ANSYS 2D CFD at representative cross-sections for high-frequency behavior. The 2D CFD results
-      agreed with the VLM envelope where the VLM still converged, giving confidence in the CFD-only
-      regime.
+      <strong>Fix:</strong> Three-pronged — increased wall thickness at high-stress corners, changed
+      print orientation so layer lines ran perpendicular to load direction, and redesigned the ball
+      joints into a through-bolt geometry that eliminated the failure location.
     </p>
+  </div>
 
-    <h4 class="danger">FAILURE 2 — 3D-PRINTED STRUCTURAL FAILURES</h4>
+  <div class="failure-block">
+    <h4>FAILURE · AUTO-FLIGHT CONTROL DESCOPED</h4>
     <p>
-      FDM-printed PLA has anisotropic strength: parts are strong in the print plane and weak at layer
-      boundaries. Early brackets and coupler links failed under cyclic flapping loads — not from peak
-      stress, but from fatigue along layer lines.
-    </p>
-    <p>
-      <strong>Fix:</strong> Three-pronged. Increased wall thickness at high-stress corners, changed
-      print orientation so layer lines ran perpendicular to the load direction, and redesigned the ball
-      joints entirely into a through-bolt geometry that eliminated the failure location.
-    </p>
-
-    <h4 class="danger">FAILURE 3 — AUTO-FLIGHT CONTROL DESCOPED</h4>
-    <p>
-      The original plan included full IMU-based semi-autonomous flight with switchable manual/auto modes
-      over an ESP32 + nRF24L01 link. The receiver hardware was fabricated and the schematic designed, but
-      integrating attitude estimation into a reliable radio link within the project timeline proved
-      infeasible.
+      The original plan included IMU-based semi-autonomous flight with switchable manual/auto modes over
+      the ESP32 + nRF24L01 link. Integrating attitude estimation into a reliable radio link within the
+      project timeline proved infeasible.
     </p>
     <p>
       <strong>Decision:</strong> Descoped autonomy to keep the prototype flying under manual control.
-      This was the right engineering call — a working manual prototype is worth more than a broken
-      autonomous one — but it left a clear direction for future work.
-    </p>
-
-    <h4 class="warn">DESIGN LIMITATION — SINGLE-WING TRADE-OFF</h4>
-    <p>
-      The choice of a single-wing mechanism simplified the design and reduced weight, but it cannot
-      replicate the folding mechanics of avian flight. This limits peak aerodynamic efficiency at high
-      speeds and constrains the range of achievable flight regimes. Documented rather than hidden —
-      future iterations would need a folding mechanism to close this gap.
-    </p>
-
-    <h4>WHAT THIS TAUGHT ME</h4>
-    <p>
-      Every failure here was a mismatch between the assumptions of a tool and the physics of the real
-      system. VLM assumed steady wakes. FDM assumed isotropic material. Auto-flight assumed a clean
-      sensor pipeline. In each case, the fix was not to force the tool to work — it was to recognize
-      the mismatch and switch approaches.
-    </p>
-    <p>
-      That mindset is what carried directly into the FOC ESC work (where textbook observers assume
-      inductive loads the real motor doesn't have) and the KiCad digital twin (where simulators assume
-      idealized PCBs the real board doesn't have). The failure modes are always more informative than
-      the successes.
+      A working manual prototype is worth more than a broken autonomous one — but it left a clear
+      direction for future work.
     </p>
   </div>
 
-  <div class="project-footer">
-    <span>Custom ROS+Gazebo aerodynamic plugins — an alternative to the MATLAB/Simulink convention in flapping-wing research.</span>
-    <span class="metric">110 cm · 6 Hz · custom aero plugins · open source</span>
+  <!-- ============================== CTA ============================== -->
+  <div class="project-cta">
+    <a href="https://github.com/CK20000" target="_blank">→ Full source on GitHub</a>
+    <a href="h743-flight-controller.html">next project · Flight Controller →</a>
   </div>
-</section>
 
 </main>
 
@@ -307,6 +300,5 @@ lift_drag_plugin               <span class="cm">// Aerodynamic forces per flap p
   <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
 </footer>
 
-<script src="assets/js/main.js"></script>
 </body>
 </html>

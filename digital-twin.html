@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KiCad PCB Digital Twin — Chanu Kalubowila</title>
+<title>PCB Digital Twin — Chanu Kalubowila</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -21,12 +21,19 @@
   </div>
 </nav>
 
-<main>
+<main class="project-page">
 
-<section class="project">
-  <div class="project-header">
-    <div class="project-title">KiCad PCB Digital Twin — Open-Source Plugin</div>
-    <div class="project-meta">2025 – Present · Independent Research · <a href="https://github.com/CK20000/STM32-Digital-Twin-Project-Status-Architecture" target="_blank">GitHub ↗</a></div>
+  <!-- ============================== HERO ============================== -->
+  <div class="hero-image">
+    <img src="assets/images/digital-twin/dashboard.png" alt="Unified PyQt6 dashboard — 7 viewers and control panel"
+         onerror="this.style.display='none'; this.parentNode.textContent='Hero — unified dashboard screenshot';">
+  </div>
+  <div class="hero-caption">All seven viewers, the live control panel, and the pipeline console — one window, all running in real time.</div>
+
+  <!-- ============================== TITLE ============================== -->
+  <div class="project-title-block">
+    <h1>PCB Digital Twin</h1>
+    <div class="meta">2025 – Present · Independent Research · <a href="https://github.com/CK20000/STM32-Digital-Twin-Project-Status-Architecture" target="_blank">GitHub ↗</a></div>
     <div class="project-specs">
       <span class="spec"><span class="k">nets:</span><span class="v">140 auto-classified</span></span>
       <span class="spec"><span class="k">sim:</span><span class="v">ngspice + Renode</span></span>
@@ -36,163 +43,199 @@
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="dt-overview">Overview</button>
-    <button class="tab" data-tab="dt-postmortem">Post-Mortem</button>
-    <button class="tab" data-tab="dt-architecture">Architecture</button>
-    <button class="tab" data-tab="dt-viewers">Viewers</button>
-  </div>
+  <!-- ============================== WHAT IT DOES ============================== -->
+  <h2 class="section-h2">What it does</h2>
+  <p>
+    A real-time visualization framework that renders a KiCad PCB as a living system. Physical quantities
+    on screen — per-net currents, voltages, thermal fields, LED states — trace from a real KiCad component
+    through compiled STM32 firmware through ngspice, not from hardcoded demo values.
+  </p>
+  <p>
+    A Python control panel writes into Renode's memory bus exactly like an external field signal.
+    Drag a slider, the value propagates through firmware → SPICE solver → heat diffusion → every viewer
+    on the dashboard updates live.
+  </p>
 
-  <div class="tab-pane active" id="dt-overview">
-    <div class="pane-split">
-      <div>
-        <h4>WHAT IT DOES</h4>
-        <p>
-          Auto-generates a complete ngspice netlist from <em>any</em> <code>.kicad_pcb</code> file,
-          runs real STM32 firmware on a virtual MCU in Renode, and renders live physics — LED states,
-          per-net currents, power dissipation, and 2D thermal diffusion — on the real board geometry.
-        </p>
-        <p>
-          Bidirectional: a Python control panel writes into Renode's memory bus exactly like an external
-          field signal, propagating through firmware → SPICE → visualization in real time.
-        </p>
-        <h4>WHY IT'S PUBLIC</h4>
-        <p>
-          A free, open-source alternative to paywalled PCB simulators. No stubs, no hardcoded circuits,
-          no faked inputs — every value on screen traces from a real KiCad component through compiled
-          firmware through SPICE through heat diffusion.
-        </p>
+  <!-- ============================== SEVEN VIEWERS ============================== -->
+  <h2 class="section-h2">Seven live viewers</h2>
+  <p>
+    Each viewer renders one physical quantity on the real PCB geometry. All seven subscribe to the
+    same ZeroMQ stream, so they update in lockstep.
+  </p>
+
+  <div class="media-grid">
+
+    <!-- LED overlay — VIDEO -->
+    <div class="media-item">
+      <div class="media-box">
+        <video autoplay muted loop playsinline
+               poster="assets/images/digital-twin/led-overlay-poster.png"
+               onerror="this.style.display='none'; this.parentNode.textContent='LED overlay animation — assets/videos/digital-twin/led-overlay.mp4';">
+          <source src="assets/videos/digital-twin/led-overlay.mp4" type="video/mp4">
+        </video>
       </div>
-      <div>
-        <div class="img-placeholder">
-          <img src="assets/images/digital-twin/dashboard.png" alt="Unified PyQt6 dashboard"
-               onerror="this.style.display='none'; this.parentNode.textContent='Unified dashboard — assets/images/digital-twin/dashboard.png';">
-        </div>
+      <div class="media-caption">
+        <strong>01 · LED overlay</strong>
+        Animated LED states on real PCB positions (D3–D9). Driven directly from firmware GPIO bits.
       </div>
     </div>
+
+    <!-- Current flow — VIDEO -->
+    <div class="media-item">
+      <div class="media-box">
+        <video autoplay muted loop playsinline
+               poster="assets/images/digital-twin/current-flow-poster.png"
+               onerror="this.style.display='none'; this.parentNode.textContent='Current flow animation — assets/videos/digital-twin/current-flow.mp4';">
+          <source src="assets/videos/digital-twin/current-flow.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="media-caption">
+        <strong>02 · Current flow</strong>
+        Per-net currents (colorized traces, top layer). Changes live as external inputs are injected via the control panel.
+      </div>
+    </div>
+
+    <!-- Voltage map — IMAGE -->
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/digital-twin/voltage-map.png" alt="Per-net DC voltage viewer"
+             onerror="this.style.display='none'; this.parentNode.textContent='Voltage map — assets/images/digital-twin/voltage-map.png';">
+      </div>
+      <div class="media-caption">
+        <strong>03 · Voltage map</strong>
+        Per-net DC node voltages (viridis, 0–12 V). Every rail, every node, resolved by the solver.
+      </div>
+    </div>
+
+    <!-- Power dissipation — IMAGE -->
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/digital-twin/power-dissipation.png" alt="Per-component power dissipation heatmap"
+             onerror="this.style.display='none'; this.parentNode.textContent='Power dissipation — assets/images/digital-twin/power-dissipation.png';">
+      </div>
+      <div class="media-caption">
+        <strong>04 · Power dissipation</strong>
+        Per-component wattage parsed from ngspice element tables. Log and linear colormaps for wide dynamic range.
+      </div>
+    </div>
+
+    <!-- Trace resistance — IMAGE -->
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/digital-twin/trace-resistance.png" alt="Trace resistance viewer with hover inspection"
+             onerror="this.style.display='none'; this.parentNode.textContent='Trace resistance — assets/images/digital-twin/trace-resistance.png';">
+      </div>
+      <div class="media-caption">
+        <strong>05 · Trace resistance</strong>
+        Per-trace copper resistance with hover inspection. Computed from real geometry: R = ρ·L/(W·t), 1 oz copper.
+      </div>
+    </div>
+
+    <!-- Thermal field v2 — VIDEO -->
+    <div class="media-item">
+      <div class="media-box">
+        <video autoplay muted loop playsinline
+               poster="assets/images/digital-twin/thermal-field-poster.png"
+               onerror="this.style.display='none'; this.parentNode.textContent='Thermal field animation — assets/videos/digital-twin/thermal-field.mp4';">
+          <source src="assets/videos/digital-twin/thermal-field.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="media-caption">
+        <strong>06 · Thermal field v2</strong>
+        2D heat diffusion with two-layer copper, vias as vertical thermal bridges, and FR4 substrate. Sparse LU solver — 7 ms per packet.
+      </div>
+    </div>
+
+    <!-- Thermal θja — IMAGE -->
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/digital-twin/thermal-theta.png" alt="Per-component junction temperature"
+             onerror="this.style.display='none'; this.parentNode.textContent='Per-component θja — assets/images/digital-twin/thermal-theta.png';">
+      </div>
+      <div class="media-caption">
+        <strong>07 · Thermal (θ<sub>ja</sub>)</strong>
+        Per-component junction temperature from package-thermal-resistance lookup. Peak 37 °C at the buck converter.
+      </div>
+    </div>
+
   </div>
 
-  <div class="tab-pane" id="dt-postmortem">
-    <h4 class="warn">THE PROBLEM</h4>
-    <p>
-      Existing PCB simulators are either paywalled, closed-source, or require manual circuit re-entry.
-      No open tool connects a real KiCad layout to a running MCU firmware and produces physics-accurate
-      analog simulation.
-    </p>
+  <!-- ============================== POST-MORTEM ============================== -->
+  <h2 class="section-h2">The hard part</h2>
+  <p>
+    The simulation wasn't the challenge — <strong>generalization</strong> was. Making it work for any
+    KiCad board (not just the one I designed) required solving netlist parsing, component classification,
+    and automated model generation without hardcoded knowledge.
+  </p>
 
-    <h4 class="warn">THE HARD PART</h4>
+  <div class="failure-block">
+    <h4>FAILURE · HARDCODED NET NAMES EVERYWHERE</h4>
     <p>
-      The simulation itself wasn't the challenge — <strong>generalization</strong> was. Making it work
-      for any KiCad board (not just the one I designed) required solving netlist parsing, component
-      classification, and automated model generation without hardcoded knowledge.
+      The first version only worked on the one board I built. Every rail name (<code>12v</code>,
+      <code>3v3-LDO1</code>, <code>A_IN1</code>) was baked into the solver. Change one label in KiCad
+      and the pipeline broke silently.
     </p>
-
-    <h4>THE FIX</h4>
-    <ul>
-      <li>
-        <strong>143 components auto-classified</strong> with zero hardcoded knowledge — heuristics based
-        on library ID (<code>lib_id</code>) and value patterns. Unknowns fall back to a black-box resistor
-        with graceful degradation.
-      </li>
-      <li>
-        <strong>Trace resistance injected</strong> between regulator outputs and loads, computed from
-        real copper geometry: R = ρ · L / (W · t) with ρ = 1.72e-8 Ω·m (copper at 20 °C), t = 35 µm
-        (1 oz copper).
-      </li>
-      <li>
-        <strong>Source metadata layer</strong> maps every SPICE branch back to its KiCad net — no hardcoded
-        net names anywhere in the pipeline. The solver reads metadata at runtime to know which net a
-        current or voltage belongs to.
-      </li>
-    </ul>
+    <p>
+      <strong>Fix:</strong> Built a <em>source metadata layer</em> — a JSON file that maps every SPICE
+      branch back to its originating KiCad net. The solver reads it at runtime; no net name is ever
+      written into the Python code.
+    </p>
   </div>
 
-  <div class="tab-pane" id="dt-architecture">
-    <h4>DATA PATH</h4>
-    <pre class="code">KiCad (.kicad_pcb) ───► digital_twin_netlist.json  (electrical topology)
-                   └──► pcb_geometry.json          (visual geometry)
-                            │
-                            ▼
-                   netlist_analyzer.py  ───► component_classification.json
-                            │
-                            ▼
-                   spice_compiler.py    ───► auto_generated.cir
-                                              + source_metadata.json
-                            │
-                            ▼
-                   inject_trace_resistance.py
-                            │
-                            ▼
-                   auto_generated_with_traces.cir
+  <div class="failure-block">
+    <h4>FAILURE · 143 COMPONENTS, NO CLASSIFICATION</h4>
+    <p>
+      SPICE needs a model for every component. Hand-writing 143 models per board defeats the purpose.
+      Initial attempt used a lookup table — broke immediately on any board that wasn't mine.
+    </p>
+    <p>
+      <strong>Fix:</strong> Heuristic classifier based on library ID (<code>lib_id</code>) and value
+      patterns. Unknown components gracefully degrade to a black-box resistor rather than failing the
+      whole pipeline. <strong>143/143 components resolved on the first full run.</strong>
+    </p>
+  </div>
+
+  <div class="failure-block">
+    <h4>FAILURE · COPPER WAS IDEAL</h4>
+    <p>
+      The first physics model treated every trace as zero-resistance. Rails came out perfect, which
+      is exactly what a real board isn't.
+    </p>
+    <p>
+      <strong>Fix:</strong> Compute per-segment trace resistance from the actual KiCad copper geometry
+      (length, width, layer) and inject it back into the SPICE netlist between regulator outputs and
+      load nodes. Now the 5 V rail drops 25.5 mV under load — physically correct.
+    </p>
+  </div>
+
+  <!-- ============================== ARCHITECTURE ============================== -->
+  <h2 class="section-h2">Architecture</h2>
+  <p>
+    Two pipelines converge on one solver: the KiCad side auto-generates the SPICE netlist; the firmware
+    side runs the real <code>.elf</code> on a virtual MCU in Renode. ZeroMQ is the message bus that
+    connects every component.
+  </p>
+
+<pre class="code">KiCad (.kicad_pcb) ───► netlist + geometry ───► auto-generated SPICE netlist
 
 STM32 Firmware (.elf) ───► Renode (virtual MCU)
-                            │
-                     ┌──────┴──────┐
-                     ▼             ▼
-              monitor tcp:1234   UARTs tcp:12345/12346
-                     │             │
-                     ▼             ▼
-              renode_reader.py  stm32_bridge.py
-              ZMQ PUB:5557 (OBS)
-              ZMQ SUB:5558 (INJECT)
-                     │
-                     ▼
-              pyspice_solver.py ───► ngspice subprocess
-                     │                     │
-                     ▼                     ▼
-              ZMQ PUB:5556  (SIM / RAIL / POWER / CURRENT / NODE / DOUT / ...)
-                     │
-                     ▼
-      ┌──────┬───────┼───────┬────────┬────────┬────────┐
-      ▼      ▼       ▼       ▼        ▼        ▼        ▼
-    LED   Current  Voltage  Heat  Thermal  Trace  Thermal
-   viewer  view    view    view   (θja)    resist  field</pre>
+                              │
+                              ▼
+                         ZeroMQ bus
+                              │
+              ┌───────────────┼───────────────┐
+              ▼               ▼               ▼
+        ngspice solver   control panel   7 viewers</pre>
 
-    <h4>THREE ZMQ TOPICS, ONE BUS</h4>
-    <ul>
-      <li><code>5557</code> — Renode observables (OBS), published by <code>renode_reader.py</code></li>
-      <li><code>5558</code> — Injections (INJECT), subscribed by <code>renode_reader.py</code></li>
-      <li><code>5556</code> — Simulation outputs (SIM, RAIL, POWER, CURRENT, NODE, DOUT, ...) from the solver</li>
-    </ul>
+  <p>
+    Full pipeline diagram, ZMQ topic list, and every file in the repo are documented on GitHub.
+  </p>
 
-    <h4>WHY ZMQ</h4>
-    <p>
-      Multiple viewers can subscribe to the same stream simultaneously; the control panel and the
-      solver communicate without tight coupling. Every component is independently restartable without
-      taking down the pipeline.
-    </p>
+  <!-- ============================== CTA ============================== -->
+  <div class="project-cta">
+    <a href="https://github.com/CK20000/STM32-Digital-Twin-Project-Status-Architecture" target="_blank">→ Full source on GitHub</a>
+    <a href="foc-esc.html">next project · FOC ESC →</a>
   </div>
-
-  <div class="tab-pane" id="dt-viewers">
-    <h4>SEVEN LIVE VIEWERS</h4>
-    <ul>
-      <li><strong>LED overlay</strong> — animated LED states on real PCB positions (D3–D9)</li>
-      <li><strong>Trace resistance</strong> — per-trace Ω with hover inspection, extracted from copper geometry</li>
-      <li><strong>Current flow</strong> — colored traces on top layer, real-time per-net current</li>
-      <li><strong>Voltage map</strong> — per-net DC node voltages, viridis 0–12 V</li>
-      <li><strong>Power dissipation</strong> — per-component heat map with log/linear colormaps</li>
-      <li><strong>Thermal (θ<sub>ja</sub>)</strong> — per-component junction temperature</li>
-      <li><strong>Thermal field v2</strong> — 2D diffusion with 2-layer copper, vias as thermal bridges, FR4 substrate</li>
-    </ul>
-
-    <div class="img-placeholder" style="margin-top:12px">
-      <img src="assets/images/digital-twin/thermal-field.png" alt="2D thermal diffusion viewer"
-           onerror="this.style.display='none'; this.parentNode.textContent='Thermal field viewer — assets/images/digital-twin/thermal-field.png';">
-    </div>
-
-    <h4>UNIFIED DASHBOARD</h4>
-    <p>
-      All seven viewers, plus the control panel and the live pipeline console, embedded in a single
-      PyQt6 window with tabs and a sidebar. Matplotlib animations are throttled based on the number of
-      visible plots to keep CPU bounded.
-    </p>
-  </div>
-
-  <div class="project-footer">
-    <span>Free alternative to paywalled PCB simulators — no stubs, no faked inputs.</span>
-    <span class="metric">140 nets · 14 milestones · 0 hardcoded</span>
-  </div>
-</section>
 
 </main>
 
@@ -201,6 +244,5 @@ STM32 Firmware (.elf) ───► Renode (virtual MCU)
   <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
 </footer>
 
-<script src="assets/js/main.js"></script>
 </body>
 </html>

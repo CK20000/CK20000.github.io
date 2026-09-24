@@ -314,3 +314,240 @@ footer {
   color: var(--text-dim);
 }
 footer .accent { color: var(--accent); }
+
+/* =====================================================================
+   SCROLL LAYOUT — for project deep pages
+   ===================================================================== */
+
+.project-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 32px 80px;
+}
+
+/* Hero image — full width, tall */
+.hero-image {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.hero-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.hero-image video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-caption {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* Title block */
+.project-title-block {
+  margin-bottom: 40px;
+}
+.project-title-block h1 {
+  font-family: var(--mono);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.project-title-block .meta {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+/* Section headings */
+.section-h2 {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+  margin: 48px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-h3 {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.3px;
+  margin: 24px 0 10px;
+}
+
+/* Body text in scroll layout */
+.project-page p {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.project-page ul {
+  margin: 0 0 16px 20px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.project-page li { margin-bottom: 8px; }
+.project-page strong { color: #fff; font-weight: 600; }
+.project-page code {
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+/* Viewer / media grid — two columns */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.media-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.media-item .media-box {
+  width: 100%;
+  background: #0a0e14;
+  overflow: hidden;
+  display: block;
+}
+.media-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media-item video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+
+.media-item .media-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+}
+.media-item .media-caption strong {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+
+/* Full-width media block */
+.media-full {
+  margin: 24px 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.media-full .media-box {
+  width: 100%;
+  background: #0a0e14;
+  overflow: hidden;
+  display: block;
+}
+.media-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media-full video {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+}
+.media-full .media-caption {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+/* Post-mortem failure block */
+.failure-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--danger);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.failure-block h4 {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--danger);
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.failure-block p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.failure-block p:last-child { margin-bottom: 0; }
+
+/* Code block in scroll layout */
+.project-page pre.code {
+  margin: 16px 0 24px;
+}
+
+/* Bottom CTA block */
+.project-cta {
+  margin-top: 60px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.project-cta a {
+  font-family: var(--mono);
+  font-size: 14px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .project-page { padding: 24px 20px 60px; }
+  .media-grid { grid-template-columns: 1fr; }
+  .project-cta { flex-direction: column; align-items: flex-start; }
+}
