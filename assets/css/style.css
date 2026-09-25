@@ -593,35 +593,39 @@ footer .accent { color: var(--accent); }
   .about-text-only { padding: 0 20px; }
 }
 
-/* ---------- NARROWER MEDIA BLOCKS ---------- */
-.hero-image,
-.media-full {
-  max-width: 480px;
+/* ---------- MEDIA SIZING ---------- */
+/* Hero stays full width of the content column (~900px) */
+.hero-image {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+}
+
+/* Hero caption matches hero width */
+.hero-caption {
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
-.hero-image {
-  margin-bottom: 12px;
-}
-
+/* Full-width media blocks are narrower than the text column */
 .media-full {
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 28px;
   margin-bottom: 28px;
 }
 
-.hero-caption {
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
+/* PCV analyzer: keep the same proportions, slightly more compact */
+.pcv-analyzer-page .hero-image {
+  max-width: 100%;
 }
 
-/* PCV analyzer media is slightly more compact than the other project pages. */
-.pcv-analyzer-page .hero-image,
 .pcv-analyzer-page .media-full {
   max-width: 440px;
 }
-
 
 .pcv-analyzer-page .media-grid {
   max-width: 760px;
