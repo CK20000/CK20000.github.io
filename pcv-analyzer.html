@@ -20,190 +20,234 @@
   </div>
 </nav>
 
-<main>
+<main class="project-page">
 
-<section class="project">
-  <div class="project-header">
-    <div class="project-title">Vision-Based PCV Analyzer — Final Year Research</div>
-    <div class="project-meta">2021 – 2025 · University of Moratuwa · Best Paper MERCon 2026</div>
+  <!-- ============================== HERO VIDEO ============================== -->
+  <div class="hero-image">
+    <video autoplay muted loop playsinline
+           poster="assets/images/pcv-analyzer/instrument.jpg"
+           onerror="this.style.display='none'; this.parentNode.textContent='PCV analyzer demo — assets/videos/pcv-analyzer/demo.mp4';">
+      <source src="assets/videos/pcv-analyzer/demo.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-caption">Final-year research instrument — lidless passively-retaining centrifuge, on-board camera, and automated HCT readout in one system.</div>
+
+  <!-- ============================== TITLE ============================== -->
+  <div class="project-title-block">
+    <h1>Vision-Based PCV Analyzer</h1>
+    <div class="meta">2021 – 2025 · University of Moratuwa · Final Year Research · <strong>Best Paper MERCon 2026</strong></div>
     <div class="project-specs">
+      <span class="spec"><span class="k">role:</span><span class="v">Project Lead · Design &amp; Manufacturing</span></span>
       <span class="spec"><span class="k">MAE:</span><span class="v">1.535 pp</span></span>
       <span class="spec"><span class="k">CLIA:</span><span class="v">78% within</span></span>
       <span class="spec"><span class="k">speedup:</span><span class="v">45–47%</span></span>
       <span class="spec"><span class="k">rotor:</span><span class="v">5000 RPM lidless</span></span>
-      <span class="spec"><span class="k">safety factor:</span><span class="v">6.6</span></span>
       <span class="spec"><span class="k">patent:</span><span class="v">NIPO 23851</span></span>
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="pcv-overview">Overview</button>
-    <button class="tab" data-tab="pcv-postmortem">Post-Mortem</button>
-    <button class="tab" data-tab="pcv-mechanical">Mechanical</button>
-    <button class="tab" data-tab="pcv-vision">Vision</button>
+  <!-- ============================== MY ROLE ============================== -->
+  <h2 class="section-h2">My role</h2>
+  <p>
+    Led the three-person team. Owned mechanical design end-to-end — every rotor iteration, motor mount,
+    vibration isolation stage, and the finished enclosure. Handled the <strong>hardware side of the
+    vision pipeline</strong>: camera mounting, lighting geometry, and rotor redesigns to eliminate
+    shadow and glare. Machine-learning training was handled by the teammate who owned the model.
+  </p>
+
+  <!-- ============================== WHAT IT DOES ============================== -->
+  <h2 class="section-h2">What it does</h2>
+  <p>
+    A clinical instrument that replaces manual microhematocrit reading with an automated imaging
+    pipeline. A lidless, passively-retaining rotor enables simultaneous multi-tube imaging; HCT is
+    computed from RBC-column detection before and after centrifugation.
+  </p>
+  <p>
+    Validated against a clinical hematocrit analyzer on 50 samples: <strong>1.535 pp</strong> MAE
+    (vs 2.202 pp manual reading), <strong>78%</strong> within CLIA tolerance (vs 46% manual),
+    <strong>45–47%</strong> faster overall processing.
+  </p>
+
+  <!-- ============================== THE INSTRUMENT ============================== -->
+  <h2 class="section-h2">The instrument</h2>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/pcv-analyzer/instrument.jpg" alt="Assembled PCV analyzer instrument"
+           onerror="this.style.display='none'; this.parentNode.textContent='Assembled instrument — assets/images/pcv-analyzer/instrument.jpg';">
+    </div>
+    <div class="media-caption">Final manufactured prototype — lidless rotor, vibration-isolated drive stage, camera on the underside of the lid, touchscreen HMI.</div>
   </div>
 
-  <div class="tab-pane active" id="pcv-overview">
-    <div class="pane-split">
-      <div>
-        <h4>WHAT IT DOES</h4>
-        <p>
-          A fully integrated instrument that replaces manual microhematocrit reading with a deep-learning
-          segmentation pipeline. A lidless, passively-retaining centrifuge rotor enables simultaneous
-          multi-tube imaging; a U-Net with a ResNet-18 encoder computes per-tube hematocrit directly
-          from RBC/plasma masks.
-        </p>
-        <p>
-          The instrument returns per-tube HCT values to a mobile application without requiring the operator
-          to visually identify the RBC–plasma boundary — the single largest source of reading error in
-          conventional PCV testing.
-        </p>
-        <h4>CLINICAL RESULT</h4>
-        <p>
-          Validated against a clinical hematocrit analyzer on 50 independent capillary samples:
-          <strong>1.535 pp</strong> mean absolute error (vs <strong>2.202 pp</strong> for manual reading),
-          <strong>78%</strong> of predictions within CLIA proficiency tolerance (vs 46% manual),
-          and <strong>45–47%</strong> reduction in total processing time — with no throughput penalty.
-        </p>
+  <!-- ============================== THE ROTOR ============================== -->
+  <h2 class="section-h2">The rotor</h2>
+  <p>
+    My core design contribution. The lidless architecture removes the manual-lid obstruction that
+    blocks top-down imaging in conventional hematocrit centrifuges. Centrifugal force wedges each
+    capillary tube into a profiled retention ledge — no active clamping, no lid, and a clear optical
+    window above every tube. Iterated through multiple full CAD revisions.
+  </p>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/pcv-analyzer/rotor-cad.png" alt="Lidless passively-retaining centrifuge rotor"
+           onerror="this.style.display='none'; this.parentNode.textContent='Rotor CAD — assets/images/pcv-analyzer/rotor-cad.png';">
+    </div>
+    <div class="media-caption">24-tube lidless rotor — passive retention ledges, transition ramps, and clear optical windows sized for a top-down CMOS sensor at &gt; 50 mm working distance.</div>
+  </div>
+
+  <div class="media-grid">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/pcv-analyzer/rotor-in-machine.png" alt="Rotor mounted in the instrument"
+             onerror="this.style.display='none'; this.parentNode.textContent='Rotor in instrument — assets/images/pcv-analyzer/rotor-in-machine.png';">
       </div>
-      <div>
-        <div class="img-placeholder">
-          <img src="assets/images/pcv-analyzer/instrument.jpg" alt="Assembled PCV analyzer instrument"
-               onerror="this.style.display='none'; this.parentNode.textContent='Assembled instrument — assets/images/pcv-analyzer/instrument.jpg';">
-        </div>
+      <div class="media-caption">
+        <strong>In situ</strong>
+        White-on-white palette — deliberately chosen to reduce shadow artifacts during imaging.
       </div>
     </div>
-  </div>
 
-  <div class="tab-pane" id="pcv-postmortem">
-    <h4 class="warn">THE PROBLEM</h4>
-    <p>
-      Manual HCT reading introduces 2–5% reading error and substantial inter-operator variability —
-      even trained students make reading errors, and the protocol requires each tube to be individually
-      aligned against a graduated card. Conventional rotors use opaque lids that obstruct optical
-      access and require manual handling, which frequently remixes the buffy coat and further degrades
-      diagnostic accuracy.
-    </p>
-
-    <h4 class="warn">THE HARD PART</h4>
-    <p>
-      The measurement itself is geometrically trivial — HCT is just a ratio of column heights. The
-      engineering challenge was making the reading <em>automatic</em> without sacrificing the physical
-      preconditions that make an accurate reading possible: unobstructed optics, structural stability at
-      5000 RPM, and vibration isolation low enough that the RBC–plasma boundary isn't disturbed.
-    </p>
-
-    <h4>THE FIX — THREE COUPLED SUBSYSTEMS</h4>
-    <ul>
-      <li>
-        <strong>Lidless passive retention.</strong> Centrifugal force itself wedges each capillary tube
-        into a profiled mechanical ledge, achieving a self-locking interference fit without any active
-        clamping. A Rule-of-Three analysis over 50 high-speed cycles with zero ejections gives an
-        upper failure-probability bound of <strong>p ≤ 6% at 95% confidence</strong>.
-      </li>
-      <li>
-        <strong>Passive vibration isolation.</strong> A four-stack rubber/foam isolator, sized against
-        a Monte Carlo worst-case unbalance force of 11.78 N (99th percentile), delivers a 3.2× RMS
-        acceleration reduction and a 10× cumulative-energy reduction at the rotor–motor interface.
-      </li>
-      <li>
-        <strong>Deep-learning segmentation.</strong> A U-Net with a ResNet-18 encoder segments RBC and
-        plasma regions pixel-wise. Training is stabilized against severe class imbalance using a
-        combined cross-entropy + Dice loss (0.5 / 0.5).
-      </li>
-    </ul>
-  </div>
-
-  <div class="tab-pane" id="pcv-mechanical">
-    <h4>ROTOR DESIGN</h4>
-    <ul>
-      <li>FDM-printed PLA monolithic disk, lidless architecture</li>
-      <li>Passive retention ledge — profiled mechanical constraint creating an interference fit</li>
-      <li>Transition ramp guiding the tube's two-stage seating motion (lateral, then radial)</li>
-      <li>Clear optical window above each tube slot, compatible with a top-down CMOS sensor at &gt; 50 mm working distance</li>
-      <li>Distal vent holes to relieve asymmetric aerodynamic pressure gradients at speed</li>
-    </ul>
-
-    <h4>STRUCTURAL VALIDATION (5000 RPM)</h4>
-    <ul>
-      <li>Peak Von Mises stress at retention ledge: <strong>3.74 MPa</strong> vs 25.0 MPa derated PLA yield</li>
-      <li>Overall <strong>safety factor 6.6</strong> against the combined yield/fracture criterion</li>
-      <li>First natural frequency: <strong>124.88 Hz</strong> → sub-critical ratio λ = 1.50 (above the 1.2 threshold)</li>
-      <li>Operational speed is set at 5000 RPM because higher speeds trigger clay sealant blowout, not rotor failure</li>
-    </ul>
-
-    <h4>VIBRATION ISOLATION</h4>
-    <p>
-      Four identical square-cross-section stacks of alternating rubber and closed-cell foam, mounted
-      symmetrically beneath the motor mount. Sized against a Monte Carlo worst-case unbalance force
-      that peaks at partial loading (~12 tubes), not at full load — a non-obvious result of mass
-      self-averaging.
-    </p>
-    <ul>
-      <li>RMS acceleration: <strong>3.2× reduction</strong> (0.218 g → 0.068 g)</li>
-      <li>Peak acceleration: <strong>3.4× reduction</strong></li>
-      <li>Cumulative vibration energy ∫a²dt: <strong>10.0× reduction</strong></li>
-    </ul>
-
-    <div class="img-placeholder" style="margin-top:12px">
-      <img src="assets/images/pcv-analyzer/rotor-cad.png" alt="Rotor CAD render"
-           onerror="this.style.display='none'; this.parentNode.textContent='Rotor CAD render — assets/images/pcv-analyzer/rotor-cad.png';">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/pcv-analyzer/chuck.png" alt="Chuck-based rotor mounting"
+             onerror="this.style.display='none'; this.parentNode.textContent='Chuck mount — assets/images/pcv-analyzer/chuck.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Chuck mount</strong>
+        Third iteration — replaces a coupling that introduced RPM-dependent misalignment.
+      </div>
     </div>
+
   </div>
 
-  <div class="tab-pane" id="pcv-vision">
-    <h4>SEGMENTATION PIPELINE</h4>
-    <pre class="code"><span class="cm"># U-Net (ResNet-18 encoder, ImageNet-pretrained)</span>
-<span class="cm"># Trained on 411 rotor images at 512×512 resolution</span>
-<span class="cm"># Severe class imbalance:</span>
-<span class="cm">#   background  99.639%</span>
-<span class="cm">#   RBC          0.183%</span>
-<span class="cm">#   plasma       0.179%</span>
+  <!-- ============================== VIBRATION ISOLATION ============================== -->
+  <h2 class="section-h2">Vibration isolation</h2>
+  <p>
+    Four rubber/foam isolation stacks, sized against a Monte Carlo worst-case unbalance force.
+    Delivered <strong>3.2× RMS reduction</strong> and <strong>10× cumulative-energy reduction</strong>
+    at the rotor–motor interface. Design basis force peaks at partial loading (~12 tubes) — a
+    non-obvious result of mass self-averaging.
+  </p>
 
-loss = <span class="num">0.5</span> * ce_loss(pred, mask) + <span class="num">0.5</span> * dice_loss(pred, mask)
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/pcv-analyzer/vibration-isolation.png" alt="Vibration isolation assembly"
+           onerror="this.style.display='none'; this.parentNode.textContent='Isolation assembly — assets/images/pcv-analyzer/vibration-isolation.png';">
+    </div>
+    <div class="media-caption">Four-stack isolator under the motor mount, with the aluminium heat sink on the motor housing.</div>
+  </div>
 
-<span class="cm"># mIoU = 0.8780 ± 0.0017 (3 seeds)</span>
-<span class="cm"># End-to-end HCT MAE = 1.535 pp vs clinical analyzer</span></pre>
+  <!-- ============================== VISION HARDWARE ============================== -->
+  <h2 class="section-h2">Vision hardware integration</h2>
+  <p>
+    My contribution to the vision pipeline was the <strong>optical and mechanical side</strong> —
+    background colour selection, lighting geometry, camera mounting, and iterative rotor redesigns
+    to eliminate glare and shadow. The model itself (U-Net with ResNet-18 encoder, 0.878 mIoU) was
+    trained by a teammate.
+  </p>
+  <p>
+    Final illumination choice came from a full factorial test: bottom diffusion light removed,
+    top background light retained. This combination produced the least shadowing in the
+    region of interest around each tube.
+  </p>
 
-    <h4>WHY THIS ARCHITECTURE</h4>
-    <ul>
-      <li>
-        <strong>Object detectors ruled out.</strong> Up to 24 densely packed, overlapping tubes per
-        image degrade detection feature-map resolution and cause NMS conflicts. Pixel-wise segmentation
-        is required because HCT is fundamentally a boundary-position measurement.
-      </li>
-      <li>
-        <strong>Vision transformers ruled out.</strong> ViTs require large-scale pretraining to match
-        CNN performance; the 411-image dataset is not sufficient to pretrain from scratch.
-      </li>
-      <li>
-        <strong>Class-weighted cross-entropy + Dice.</strong> Naïve cross-entropy converges poorly
-        under 99.6% background. Dice directly optimizes region overlap, complementing the weighted CE.
-      </li>
-    </ul>
+  <div class="media-grid">
 
-    <h4>POST-PROCESSING</h4>
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/pcv-analyzer/seg-original.jpg" alt="Original rotor image"
+             onerror="this.style.display='none'; this.parentNode.textContent='Original — assets/images/pcv-analyzer/seg-original.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Captured frame</strong>
+        Raw top-down image of the rotor after centrifugation.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/pcv-analyzer/seg-ground-truth.png" alt="Ground-truth segmentation mask"
+             onerror="this.style.display='none'; this.parentNode.textContent='Ground truth — assets/images/pcv-analyzer/seg-ground-truth.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Ground truth</strong>
+        Hand-annotated RBC and plasma regions across all tubes.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/pcv-analyzer/seg-predicted.png" alt="Predicted segmentation mask"
+             onerror="this.style.display='none'; this.parentNode.textContent='Predicted — assets/images/pcv-analyzer/seg-predicted.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Prediction</strong>
+        U-Net output at mIoU 0.878 — boundary alignment is what drives the final HCT accuracy.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/pcv-analyzer/hct-output.png" alt="HCT values computed per tube"
+           onerror="this.style.display='none'; this.parentNode.textContent='HCT output — assets/images/pcv-analyzer/hct-output.png';">
+    </div>
+    <div class="media-caption">Per-tube HCT after component pairing and OCR-based tube ID matching.</div>
+  </div>
+
+  <!-- ============================== POST-MORTEM ============================== -->
+  <h2 class="section-h2">The hard part</h2>
+
+  <div class="failure-block">
+    <h4>FAILURE · SHADOWS AND GLARE KILLED CLASSICAL SEGMENTATION</h4>
     <p>
-      Predicted masks are converted to per-tube HCT values through connected-component analysis.
-      RBC and plasma regions are extracted as separate components, small isolated regions are discarded,
-      and each RBC component is paired with its nearest plasma component by centroid distance. Each
-      rotor slot carries a printed identifier extracted by OCR, associating each measurement with its
-      sample record.
+      Blue background scored highest on color-theory metrics but <em>worst</em> on real segmentation —
+      plasma is too transparent against blue, and once tubes were inserted into the rotor, glare from
+      the reflective walls degraded everything further.
     </p>
-
-    <h4>WHAT'S NEXT</h4>
     <p>
-      The instrument's demonstrated accuracy is currently validated under one fixed illumination
-      configuration and one rotor design. Extending to multiple devices, lighting conditions, and
-      sealant colors is the primary direction for further work.
+      <strong>Fix:</strong> Redesigned the rotor so the tube is supported only above the clay plug,
+      removing the shadow source from the region of interest. Switched to a white background with
+      top-only illumination after a full lighting combination test.
     </p>
   </div>
 
-  <div class="project-footer">
-    <span>Won IESL Inventor of the Year 2025, Mobile Award for Best ME FYP, and MERCon 2026 Best Paper.</span>
-    <span class="metric">1.535 pp · 78% CLIA · patent pending</span>
+  <div class="failure-block">
+    <h4>FAILURE · COUPLING-INDUCED MISALIGNMENT</h4>
+    <p>
+      Rigid-dynamic analysis showed base reaction force growing exponentially above 12,000 RPM.
+      Root cause: a coupling between motor and rotor shaft that introduced RPM-dependent misalignment.
+    </p>
+    <p>
+      <strong>Fix:</strong> Removed the coupling. Redesigned into a chuck-based mount press-fitted
+      directly on the motor shaft — iterated three times until a single-piece geometry eliminated
+      tool-free disassembly risk and thermal build-up. An outrunner alternative was evaluated and
+      rejected on thermal grounds.
+    </p>
   </div>
-</section>
+
+  <div class="failure-block">
+    <h4>FAILURE · COLD-START VIBRATION EXCEEDED DESIGN SPEC</h4>
+    <p>
+      The first prototype vibrated heavily — motor and rotor both contributed. The nut-based mounting
+      loosened under cyclic load within minutes of operation.
+    </p>
+    <p>
+      <strong>Fix:</strong> Replaced the mounting strategy entirely. Cast-iron mass damper under the
+      motor, chuck-based rotor mounting, and a four-stack rubber/foam isolator sized through genetic
+      algorithm optimisation of stiffness and damping. Final displacement reduction: 17.6% peak,
+      23.75% average, 44.87% vibration energy.
+    </p>
+  </div>
+
+  <!-- ============================== CTA ============================== -->
+  <div class="project-cta">
+    <a href="cv.pdf" target="_blank">→ Full paper on request</a>
+    <a href="index.html">← all projects</a>
+  </div>
 
 </main>
 
@@ -212,6 +256,5 @@ loss = <span class="num">0.5</span> * ce_loss(pred, mask) + <span class="num">0.
   <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
 </footer>
 
-<script src="assets/js/main.js"></script>
 </body>
 </html>
