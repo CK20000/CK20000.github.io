@@ -598,3 +598,38 @@ footer .accent { color: var(--accent); }
 @media (max-width: 640px) {
   .about-text-only { padding: 0 20px; }
 }
+
+/* ---------- NARROWER MEDIA BLOCKS ---------- */
+.hero-image,
+.media-full {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-image {
+  margin-bottom: 12px;
+}
+
+.media-full {
+  margin-top: 28px;
+  margin-bottom: 28px;
+}
+
+.hero-caption {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* PCV analyzer media is slightly more compact than the other project pages. */
+.pcv-analyzer-page .hero-image,
+.pcv-analyzer-page .media-full {
+  max-width: 600px;
+}
+
+.pcv-analyzer-page .media-grid {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
