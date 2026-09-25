@@ -334,7 +334,7 @@ footer .accent { color: var(--accent); }
   padding: 32px 32px 80px;
 }
 
-/* Hero image — full width, tall */
+/* Hero media — natural aspect ratio for images and videos */
 .hero-image {
   width: 100%;
   background: var(--surface);
@@ -351,8 +351,6 @@ footer .accent { color: var(--accent); }
 .hero-image video {
   width: 100%;
   height: auto;
-  aspect-ratio: 16/9;
-  object-fit: cover;
   display: block;
 }
 
@@ -456,8 +454,6 @@ footer .accent { color: var(--accent); }
 .media-item video {
   width: 100%;
   height: auto;
-  aspect-ratio: 16/9;
-  object-fit: cover;
   display: block;
 }
 
@@ -498,8 +494,6 @@ footer .accent { color: var(--accent); }
 .media-full video {
   width: 100%;
   height: auto;
-  aspect-ratio: 16/9;
-  object-fit: cover;
   display: block;
 }
 .media-full .media-caption {
