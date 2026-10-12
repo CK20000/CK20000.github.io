@@ -667,3 +667,47 @@ footer .accent { color: var(--accent); }
 @media (max-width: 640px) {
   .art-grid-3col { grid-template-columns: 1fr; }
 }
+/* ---------- OTHER WORK LIST ---------- */
+.work-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+}
+.work-list li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: baseline;
+}
+.work-list li:first-child {
+  border-top: 1px solid var(--border);
+}
+.work-title {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.2px;
+}
+.work-year {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  grid-column: 2;
+  grid-row: 1;
+}
+.work-desc {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .work-list li { padding: 16px 0; }
+  .work-title { font-size: 14px; }
+  .work-desc { font-size: 13px; }
+}
