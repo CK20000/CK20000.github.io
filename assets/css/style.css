@@ -711,3 +711,7 @@ footer .accent { color: var(--accent); }
   .work-title { font-size: 14px; }
   .work-desc { font-size: 13px; }
 }
+/* Wide media variant — breaks out of the default 480px cap */
+.media-full.media-wide {
+  max-width: 100%;
+}
