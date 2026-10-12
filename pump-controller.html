@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Pump Controller — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/pump-controller.jpg" alt="Water pump controller enclosure"
+         onerror="this.style.display='none'; this.parentNode.textContent='Pump controller — assets/images/hardware/pump-controller.jpg';">
+  </div>
+  <div class="hero-caption">Water pump controller — 4-relay retentive switching stage for two solenoid valves, built for the home water supply.</div>
+
+  <div class="project-title-block">
+    <h1>Water Pump Controller</h1>
+    <div class="meta">Home installation · 4-relay retentive switch</div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A retentive relay controller built to drive two solenoid valves for the home water supply.
+    Four relays with latching logic — state persists across power cycles, so a brief outage
+    doesn't leave the valves in an unknown state when supply returns.
+  </p>
+  <p>
+    Housed in a metal enclosure with a mains PSU, front-panel buttons, and indicator LEDs for
+    power and valve state. Mounted and running continuously.
+  </p>
+
+  <h2 class="section-h2">Key features</h2>
+  <ul>
+    <li>Four-relay control stage — two solenoid valves, each with independent drive</li>
+    <li>Retentive switching logic — survives brief power outages without losing valve state</li>
+    <li>DIN-rail mains PSU inside the enclosure</li>
+    <li>Front panel with power indicator and per-valve state LEDs</li>
+    <li>Metal enclosure for permanent wall mounting</li>
+  </ul>
+
+  <h2 class="section-h2">Inside</h2>
+
+  <div class="media-grid">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/pump-controller-internal.jpg" alt="Pump controller internal wiring"
+             onerror="this.style.display='none'; this.parentNode.textContent='Internal — assets/images/hardware/pump-controller-internal.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Internal layout</strong>
+        Four blue relay modules, mains PSU, and latching control wiring.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/pump-controller-relays.jpg" alt="Relay bank"
+             onerror="this.style.display='none'; this.parentNode.textContent='Relay bank — assets/images/hardware/pump-controller-relays.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Relay bank</strong>
+        Four relays — two per valve, wired for retentive state.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="project-cta">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">Download CV</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
