@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GX Telemetry Engine — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/telemetry-engine.jpg" alt="GX Telemetry Engine interface"
+         onerror="this.style.display='none'; this.parentNode.textContent='GX Telemetry Engine — assets/images/hardware/telemetry-engine.jpg';">
+  </div>
+  <div class="hero-caption">Custom analysis pipeline for FPV blackbox logs — one interface, nine different views of a single flight.</div>
+
+  <div class="project-title-block">
+    <h1>GX Telemetry Engine</h1>
+    <div class="meta">2026 – Present · Blackbox log analysis toolchain</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">input:</span><span class="v">CSV blackbox logs</span></span>
+      <span class="spec"><span class="k">scale:</span><span class="v">500k+ samples</span></span>
+      <span class="spec"><span class="k">views:</span><span class="v">9 analysis modes</span></span>
+      <span class="spec"><span class="k">stack:</span><span class="v">Python · NumPy · Matplotlib</span></span>
+    </div>
+  </div>
+
+  <h2 class="section-h2">What it does</h2>
+  <p>
+    Post-flight analysis toolchain for FPV flight controller blackbox logs. Loads multi-hundred-thousand-
+    sample CSV logs, then renders any of nine different analysis views — from raw PID tracking to a
+    Kalman-fused 3D flight trajectory — in a single interface.
+  </p>
+
+  <h2 class="section-h2">Analysis modules</h2>
+  <ul>
+    <li><strong>PID setpoint vs gyro tracking</strong> — roll, pitch, yaw channels with configurable render limit</li>
+    <li><strong>FFT spectral analysis</strong> — pre-notch vs post-notch filter effectiveness across all axes</li>
+    <li><strong>Kalman-fused 3D trajectory</strong> — magnetometer + barometer + accelerometer fused path</li>
+    <li><strong>2D GPS coordinate path</strong> — UBlox M8 waypoint rendering</li>
+    <li><strong>Barometric altitude profile</strong> — absolute altitude over flight time</li>
+    <li><strong>3-axis velocity & displacement</strong> — earth-frame kinematics</li>
+    <li><strong>Battery kinetics</strong> — filtered voltage/current over the flight envelope</li>
+    <li><strong>RF link health</strong> — CRSF/ELRS packet integrity and signal strength</li>
+  </ul>
+
+  <h2 class="section-h2">Sample output</h2>
+  <p>
+    Each module renders independently, so the same log can be inspected from nine different angles
+    without reprocessing.
+  </p>
+
+  <div class="media-grid">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/telemetry-pid.jpg" alt="PID setpoint vs gyro tracking"
+             onerror="this.style.display='none'; this.parentNode.textContent='PID tracking — assets/images/hardware/telemetry-pid.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>PID tracking</strong>
+        Commanded setpoint vs filtered gyro across roll/pitch/yaw.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/telemetry-fft.jpg" alt="FFT spectral analysis"
+             onerror="this.style.display='none'; this.parentNode.textContent='FFT analysis — assets/images/hardware/telemetry-fft.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Spectral density</strong>
+        Pre-notch vs post-notch — showing filter effectiveness across the frequency band.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/telemetry-3d.jpg" alt="Kalman-fused 3D trajectory"
+             onerror="this.style.display='none'; this.parentNode.textContent='3D trajectory — assets/images/hardware/telemetry-3d.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>3D trajectory</strong>
+        Sensor-fused flight path (magnetometer + barometer + accelerometer).
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/telemetry-gps.jpg" alt="GPS coordinate path"
+             onerror="this.style.display='none'; this.parentNode.textContent='GPS path — assets/images/hardware/telemetry-gps.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>GPS path</strong>
+        UBlox M8 2D trajectory — every waypoint logged and rendered.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="project-cta">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">Download CV</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Small Circuit Builds — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/small-circuits.jpg" alt="Small circuit builds collection"
+         onerror="this.style.display='none'; this.parentNode.textContent='Circuits — assets/images/hardware/small-circuits.jpg';">
+  </div>
+  <div class="hero-caption">Small circuit builds — USB charging, level indication, PWM generation, and MOSFET drive.</div>
+
+  <div class="project-title-block">
+    <h1>Small Circuit Builds</h1>
+    <div class="meta">Utility circuits · Assembled on perfboard</div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A collection of small utility circuits built over the years for bench work — USB phone chargers,
+    battery level indicators, a PWM signal generator, and a single-MOSFET micro motor driver.
+    None of these are research-grade projects, but together they show the range of small-signal
+    and power-electronics work that sits underneath the bigger boards.
+  </p>
+
+  <h2 class="section-h2">What's in the collection</h2>
+
+  <div class="media-grid">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/usb-charger.jpg" alt="USB phone charging circuits"
+             onerror="this.style.display='none'; this.parentNode.textContent='USB chargers — assets/images/hardware/usb-charger.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>USB charging circuits</strong>
+        Three variants — charging stage, voltage comparison, and current-limit indication. Built to understand the full chain from a raw Li-ion cell to a stable 5V USB output.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/battery-level.jpg" alt="Battery level indicator"
+             onerror="this.style.display='none'; this.parentNode.textContent='Level indicator — assets/images/hardware/battery-level.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Battery level indicator</strong>
+        Comparator-based voltage threshold detection — turns a raw cell voltage into a readable state.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/pwm-generator.jpg" alt="PWM signal generator"
+             onerror="this.style.display='none'; this.parentNode.textContent='PWM generator — assets/images/hardware/pwm-generator.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>PWM generator</strong>
+        Small analog PWM source — built for testing gate drivers and motor speed control without needing a microcontroller in the loop.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/micro-driver.jpg" alt="Single-MOSFET micro motor driver"
+             onerror="this.style.display='none'; this.parentNode.textContent='Micro driver — assets/images/hardware/micro-driver.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Micro motor driver</strong>
+        Single-MOSFET low-side driver — the smallest motor drive unit I built, before moving to full bridges.
+      </div>
+    </div>
+
+  </div>
+
+  <h2 class="section-h2">Reference builds</h2>
+  <p>
+    Two battery chargers for 6S and 4S Li-ion packs — assembled from off-the-shelf modules rather
+    than designed from scratch. Included here as part of the pack-building workflow that supports
+    the FPV platforms.
+  </p>
+
+  <div class="project-cta">
+    <a href="battery-packs.html">→ Battery Packs</a>
+    <a href="index.html">← all projects</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>

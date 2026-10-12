@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full-Bridge Motor Driver Prototype — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/full-bridge.jpg" alt="Full-bridge motor driver prototype"
+         onerror="this.style.display='none'; this.parentNode.textContent='Full-bridge — assets/images/hardware/full-bridge.jpg';">
+  </div>
+  <div class="hero-caption">Full-bridge prototype — hand-wired test build, working H-bridge drive stage.</div>
+
+  <div class="project-title-block">
+    <h1>Full-Bridge Motor Driver</h1>
+    <div class="meta">Prototype build · Pre-PCB era</div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A hand-wired full H-bridge motor driver built before I started designing PCBs. Gate drivers,
+    MOSFETs, deadtime handling, and current sense wired point-to-point on perfboard. Ugly, but it
+    worked — and it's the build that proved I understood the topology well enough to commit to
+    a fabricated board.
+  </p>
+
+  <h2 class="section-h2">Key features</h2>
+  <ul>
+    <li>Full H-bridge topology — four switching elements driving a single motor phase</li>
+    <li>Hand-wired on perfboard — no PCB, all point-to-point</li>
+    <li>Gate drive timing validated against real switching behavior</li>
+    <li>Predecessor to the isolated half-bridge PCB design</li>
+  </ul>
+
+  <div class="project-cta">
+    <a href="index.html">← all projects</a>
+    <a href="half-bridge-driver.html">→ Isolated Half-Bridge PCB</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>

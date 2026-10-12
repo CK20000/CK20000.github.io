@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motor Driver Evolution — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/motor-driver-v2.jpg" alt="FOC motor driver — current version"
+         onerror="this.style.display='none'; this.parentNode.textContent='FOC v2 — assets/images/hardware/motor-driver-v2.jpg';">
+  </div>
+  <div class="hero-caption">Motor driver progression — from isolated half-bridge through four FOC iterations.</div>
+
+  <div class="project-title-block">
+    <h1>Motor Driver Evolution</h1>
+    <div class="meta">Iterative progression · 2024 – Present</div>
+  </div>
+
+  <h2 class="section-h2">Overview</h2>
+  <p>
+    A progression of motor driver boards built to close the loop between power electronics and
+    control firmware. Started with an isolated half-bridge as a safe reference design, moved to a
+    full-bridge prototype, then into four successive FOC driver iterations — each one fixing a
+    specific limitation from the previous version.
+  </p>
+
+  <!-- ============================== STAGE 1 ============================== -->
+  <h2 class="section-h2">01 · Isolated Half-Bridge</h2>
+  <p>
+    A single half-bridge driver with galvanic PWM isolation and bidirectional current sensing.
+    Built as a reference design to validate the isolation and current-sense chain before committing
+    to a full three-phase driver.
+  </p>
+  <ul>
+    <li>IR2101 gate driver with bootstrap topology</li>
+    <li>2× 6N137 high-speed optocouplers isolating logic from power</li>
+    <li>AD8418 bidirectional current sense across a 2 mΩ shunt</li>
+    <li>1000 µF bulk smoothing on the power rail</li>
+  </ul>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/hardware/motor-driver-v0.jpg" alt="Isolated half-bridge motor driver"
+           onerror="this.style.display='none'; this.parentNode.textContent='Half-bridge — assets/images/hardware/motor-driver-v0.jpg';">
+    </div>
+    <div class="media-caption">Isolated half-bridge — logic and power domains separated by optocouplers.</div>
+  </div>
+
+  <!-- ============================== STAGE 2 ============================== -->
+  <h2 class="section-h2">02 · Full-Bridge Prototype</h2>
+  <p>
+    First attempt at a complete motor drive stage — a full H-bridge test board built to verify gate
+    drive timing, deadtime handling, and current-sense behavior under switching before committing to
+    a three-phase layout.
+  </p>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/hardware/motor-driver-v1.jpg" alt="Full-bridge motor driver prototype"
+           onerror="this.style.display='none'; this.parentNode.textContent='Full-bridge prototype — assets/images/hardware/motor-driver-v1.jpg';">
+    </div>
+    <div class="media-caption">Full-bridge prototype — test board for gate drive and current-sense validation.</div>
+  </div>
+
+  <!-- ============================== STAGE 3 ============================== -->
+  <h2 class="section-h2">03 · FOC Driver · v1</h2>
+  <p>
+    First three-phase FOC driver board. Established the basic topology: low-side shunt sensing,
+    optocoupler-isolated gate signals, and a discrete power stage driven from an STM32G431.
+    Exposed the design limits that motivated the next revision — thermal density and gate-loop
+    layout.
+  </p>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/hardware/motor-driver-foc-v1.jpg" alt="FOC driver version 1"
+           onerror="this.style.display='none'; this.parentNode.textContent='FOC v1 — assets/images/hardware/motor-driver-foc-v1.jpg';">
+    </div>
+    <div class="media-caption">FOC v1 — first three-phase driver board, low-side shunt sensing.</div>
+  </div>
+
+  <!-- ============================== STAGE 4 ============================== -->
+  <h2 class="section-h2">04 · FOC Driver · v2 (current)</h2>
+  <p>
+    Current driver revision — the board on display. Cleaned up power routing, improved thermal
+    behavior, and refined the gate-drive layout after v1's lessons. Runs the STM32G431
+    sensorless FOC kernel at 24 kHz.
+  </p>
+  <ul>
+    <li>Refined power stage layout — reduced gate loop inductance</li>
+    <li>Improved thermal path from MOSFETs to board copper</li>
+    <li>Integrated bulk capacitance and snubbers at the power entry</li>
+    <li>Same 24 kHz control loop, now with cleaner electrical behavior</li>
+  </ul>
+
+  <div class="media-full">
+    <div class="media-box">
+      <img src="assets/images/hardware/motor-driver-v2.jpg" alt="FOC driver version 2 — current"
+           onerror="this.style.display='none'; this.parentNode.textContent='FOC v2 — assets/images/hardware/motor-driver-v2.jpg';">
+    </div>
+    <div class="media-caption">FOC v2 — current board, revised layout with improved thermal and gate-drive behavior.</div>
+  </div>
+
+  <!-- ============================== STAGE 5 ============================== -->
+  <h2 class="section-h2">05 · FOC Driver · v3 (in progress)</h2>
+  <p>
+    Next revision currently in design. Focused on integrating the sensing front end more tightly
+    with the power stage and reducing overall board size for a more compact final form factor.
+  </p>
+
+  <div class="failure-block">
+    <h4>STATUS · IN DESIGN</h4>
+    <p>
+      Layout and component selection in progress. Will be added here when fabricated and validated.
+    </p>
+  </div>
+
+  <div class="project-cta">
+    <a href="foc-esc.html">→ FOC ESC firmware</a>
+    <a href="index.html">← all projects</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
