@@ -24,8 +24,8 @@
 <main class="project-page">
 
   <div class="hero-image">
-    <img src="assets/images/hardware/telemetry-engine.jpg" alt="GX Telemetry Engine interface"
-         onerror="this.style.display='none'; this.parentNode.textContent='GX Telemetry Engine — assets/images/hardware/telemetry-engine.jpg';">
+    <img src="assets/images/gx/telemetry-engine.jpg" alt="GX Telemetry Engine interface"
+         onerror="this.style.display='none'; this.parentNode.textContent='GX Telemetry Engine — assets/images/gx/telemetry-engine.jpg';">
   </div>
   <div class="hero-caption">Custom analysis pipeline for FPV blackbox logs — one interface, nine different views of a single flight.</div>
 
@@ -61,7 +61,7 @@
 
   <h2 class="section-h2">Sample output</h2>
   <p>
-    Each module renders independently, so the same log can be inspected from nine different angles
+    Each module renders independently, so the same log can be inspected from multiple angles
     without reprocessing.
   </p>
 
@@ -69,8 +69,8 @@
 
     <div class="media-item">
       <div class="media-box">
-        <img src="assets/images/hardware/telemetry-pid.jpg" alt="PID setpoint vs gyro tracking"
-             onerror="this.style.display='none'; this.parentNode.textContent='PID tracking — assets/images/hardware/telemetry-pid.jpg';">
+        <img src="assets/images/gx/telemetry-pid.jpg" alt="PID setpoint vs gyro tracking"
+             onerror="this.style.display='none'; this.parentNode.textContent='PID tracking — assets/images/gx/telemetry-pid.jpg';">
       </div>
       <div class="media-caption">
         <strong>PID tracking</strong>
@@ -80,30 +80,30 @@
 
     <div class="media-item">
       <div class="media-box">
-        <img src="assets/images/hardware/telemetry-fft.jpg" alt="FFT spectral analysis"
-             onerror="this.style.display='none'; this.parentNode.textContent='FFT analysis — assets/images/hardware/telemetry-fft.jpg';">
+        <img src="assets/images/gx/telemetry-fft.jpg" alt="FFT spectral analysis"
+             onerror="this.style.display='none'; this.parentNode.textContent='FFT — assets/images/gx/telemetry-fft.jpg';">
       </div>
       <div class="media-caption">
         <strong>Spectral density</strong>
-        Pre-notch vs post-notch — showing filter effectiveness across the frequency band.
+        Pre-notch vs post-notch — filter effectiveness across the band.
       </div>
     </div>
 
     <div class="media-item">
       <div class="media-box">
-        <img src="assets/images/hardware/telemetry-3d.jpg" alt="Kalman-fused 3D trajectory"
-             onerror="this.style.display='none'; this.parentNode.textContent='3D trajectory — assets/images/hardware/telemetry-3d.jpg';">
+        <img src="assets/images/gx/telemetry-3d.jpg" alt="Kalman-fused 3D trajectory"
+             onerror="this.style.display='none'; this.parentNode.textContent='3D trajectory — assets/images/gx/telemetry-3d.jpg';">
       </div>
       <div class="media-caption">
         <strong>3D trajectory</strong>
-        Sensor-fused flight path (magnetometer + barometer + accelerometer).
+        Sensor-fused path — magnetometer + barometer + accelerometer.
       </div>
     </div>
 
     <div class="media-item">
       <div class="media-box">
-        <img src="assets/images/hardware/telemetry-gps.jpg" alt="GPS coordinate path"
-             onerror="this.style.display='none'; this.parentNode.textContent='GPS path — assets/images/hardware/telemetry-gps.jpg';">
+        <img src="assets/images/gx/telemetry-gps.jpg" alt="GPS coordinate path"
+             onerror="this.style.display='none'; this.parentNode.textContent='GPS path — assets/images/gx/telemetry-gps.jpg';">
       </div>
       <div class="media-caption">
         <strong>GPS path</strong>
@@ -111,11 +111,33 @@
       </div>
     </div>
 
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/gx/altimeter.jpg" alt="Altitude profile"
+             onerror="this.style.display='none'; this.parentNode.textContent='Altimeter — assets/images/gx/altimeter.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Altitude profile</strong>
+        Absolute barometric altitude over the full flight duration.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/gx/battery-kinetics.jpg" alt="Battery voltage and current"
+             onerror="this.style.display='none'; this.parentNode.textContent='Battery — assets/images/gx/battery-kinetics.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Battery kinetics</strong>
+        Filtered voltage and current over the flight envelope.
+      </div>
+    </div>
+
   </div>
 
   <div class="project-cta">
+    <a href="fpv-platforms.html">→ FPV Platforms</a>
     <a href="index.html">← all projects</a>
-    <a href="cv.pdf" target="_blank">Download CV</a>
   </div>
 
 </main>
