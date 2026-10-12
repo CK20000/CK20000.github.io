@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Motor Driver Evolution — Chanu Kalubowila</title>
+<title>STM32F407 Modular Industrial PLC — Chanu Kalubowila</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,98 +24,43 @@
 <main class="project-page">
 
   <div class="hero-image">
-    <img src="assets/images/hardware/motor-driver-v2.jpg" alt="FOC driver v2 — current revision"
-         onerror="this.style.display='none'; this.parentNode.textContent='FOC v2 — assets/images/hardware/motor-driver-v2.jpg';">
+    <img src="assets/images/hardware/plc.jpg" alt="STM32F407 modular industrial PLC"
+         onerror="this.style.display='none'; this.parentNode.textContent='Industrial PLC — assets/images/hardware/plc.jpg';">
   </div>
-  <div class="hero-caption">FOC driver v2 — current revision, running the STM32G431 sensorless FOC kernel at 24 kHz.</div>
+  <div class="hero-caption">STM32F407VET6-based modular industrial PLC — ruggedized for teaching and lab environments.</div>
 
   <div class="project-title-block">
-    <h1>Motor Driver Evolution</h1>
-    <div class="meta">Four FOC iterations + prototype stages</div>
-  </div>
-
-  <h2 class="section-h2">Overview</h2>
-  <p>
-    A progression of motor driver boards built to close the loop between power electronics and
-    control firmware. Started with a hand-wired H-bridge prototype, then a fabricated half-bridge
-    PCB, then into FOC driver iterations — each revision fixing a specific limitation from the
-    previous one.
-  </p>
-
-  <h2 class="section-h2">01 · Full-Bridge Prototype</h2>
-  <p>
-    Hand-wired H-bridge built on perfboard before I designed any PCBs. Gate drivers, MOSFETs,
-    deadtime handling, and current sense wired point-to-point. Ugly, but it worked — the build that
-    proved the topology well enough to commit to a fabricated design.
-  </p>
-
-  <div class="media-full">
-    <div class="media-box">
-      <img src="assets/images/hardware/full-bridge.jpg" alt="Hand-wired full-bridge prototype"
-           onerror="this.style.display='none'; this.parentNode.textContent='Full-bridge — assets/images/hardware/full-bridge.jpg';">
+    <h1>Modular Industrial PLC</h1>
+    <div class="meta">2024 · STM32F407VET6 · 168 MHz</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">mcu:</span><span class="v">STM32F407VET6</span></span>
+      <span class="spec"><span class="k">clock:</span><span class="v">168 MHz</span></span>
+      <span class="spec"><span class="k">digital I/O:</span><span class="v">8 in / 8 out</span></span>
+      <span class="spec"><span class="k">analog:</span><span class="v">8× 0–10 V in · 2 DAC out</span></span>
+      <span class="spec"><span class="k">comms:</span><span class="v">RS-485 · Wi-Fi</span></span>
     </div>
-    <div class="media-caption">Full-bridge prototype — hand-wired, working.</div>
   </div>
 
-  <h2 class="section-h2">02 · Isolated Half-Bridge PCB</h2>
+  <h2 class="section-h2">What it is</h2>
   <p>
-    First fabricated motor driver — a single isolated half-bridge. Established the design language
-    for later boards: IR2101 gate drivers, 6N137 optocoupler isolation between logic and power, and
-    AD8418 bidirectional current sensing across a 2 mΩ shunt.
+    A ruggedized, student-accessible PLC platform built around the STM32F407VET6. Designed for
+    educational lab environments — combines real industrial communication protocols (Modbus RTU over
+    RS-485) with proper field isolation so students can safely learn industrial automation on hardware
+    that behaves like the real thing.
   </p>
 
-  <div class="media-full">
-    <div class="media-box">
-      <img src="assets/images/hardware/half-bridge.jpg" alt="Isolated half-bridge PCB"
-           onerror="this.style.display='none'; this.parentNode.textContent='Half-bridge — assets/images/hardware/half-bridge.jpg';">
-    </div>
-    <div class="media-caption">Isolated half-bridge — first fabricated driver PCB, logic and power isolated.</div>
-  </div>
-
-  <h2 class="section-h2">03 · FOC Driver · v1</h2>
-  <p>
-    First three-phase FOC driver board. Established the topology: low-side shunt sensing,
-    optocoupler-isolated gate signals, and a discrete power stage driven from an STM32G431.
-    Exposed the design limits that motivated the next revision — thermal density and gate-loop
-    layout.
-  </p>
-
-  <h2 class="section-h2">04 · FOC Driver · v2 (current)</h2>
-  <p>
-    Current driver revision — cleaned up power routing, improved thermal behavior, and refined the
-    gate-drive layout after v1's lessons. Runs the STM32G431 sensorless FOC kernel at 24 kHz.
-  </p>
+  <h2 class="section-h2">Key features</h2>
   <ul>
-    <li>Refined power stage layout — reduced gate loop inductance</li>
-    <li>Improved thermal path from MOSFETs to board copper</li>
-    <li>Integrated bulk capacitance and snubbers at the power entry</li>
-    <li>Same 24 kHz control loop, cleaner electrical behavior</li>
+    <li><strong>Full field isolation</strong> — 8 opto-isolated digital inputs (PC817), 8 opto-isolated outputs, and 4 isolated PWM channels (6N137)</li>
+    <li><strong>Analog interface</strong> — 8 buffered 0–10 V inputs (resistor dividers + Zener clamping) and 2 DAC outputs via LM358 op-amp stage</li>
+    <li><strong>Industrial comms</strong> — half-duplex RS-485 (MAX3485) with selectable 120 Ω termination; Wi-Fi via ESP-12S on USART3</li>
+    <li><strong>Expansion</strong> — I2C (OLED/peripherals), SPI2 (external IO modules), onboard 8 Mbit SPI flash for data logging</li>
+    <li><strong>Debug + DFU</strong> — 4-pin SWD header and USB-C DFU interface</li>
   </ul>
 
-  <div class="media-full">
-    <div class="media-box">
-      <img src="assets/images/hardware/motor-driver-v2.jpg" alt="FOC driver v2 — current revision"
-           onerror="this.style.display='none'; this.parentNode.textContent='FOC v2 — assets/images/hardware/motor-driver-v2.jpg';">
-    </div>
-    <div class="media-caption">FOC v2 — current board, revised layout with improved thermal and gate-drive behavior.</div>
-  </div>
-
-  <h2 class="section-h2">05 · FOC Driver · v3 (in progress)</h2>
-  <p>
-    Next revision in design. Focused on integrating the sensing front end more tightly with the
-    power stage and reducing overall board size for a more compact final form factor.
-  </p>
-
-  <div class="failure-block">
-    <h4>STATUS · IN DESIGN</h4>
-    <p>
-      Layout and component selection in progress. Will be added here when fabricated and validated.
-    </p>
-  </div>
-
   <div class="project-cta">
-    <a href="foc-esc.html">→ FOC ESC firmware</a>
     <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">Download CV</a>
   </div>
 
 </main>
