@@ -25,27 +25,169 @@
 
   <div class="project-title-block">
     <h1>FOC Driver Iterations</h1>
-    <div class="meta">Earlier revisions of the three-phase FOC driver</div>
+    <div class="meta">Three revisions of the three-phase FOC driver hardware</div>
   </div>
 
-  <h2 class="section-h2">What these are</h2>
+  <h2 class="section-h2">Overview</h2>
   <p>
-    Previous versions of the three-phase FOC driver hardware. The current revision runs the
-    bare-metal sensorless FOC firmware on an STM32G431 — this page shows the boards that came
-    before, and the layout lessons that fed into the current design.
+    Three generations of FOC driver hardware — a v1 prototype, a v2 integrated board, and a v3
+    four-layer revision currently in design. Each version was driven by a specific limitation
+    from the previous one.
   </p>
 
-  <div class="media-full media-wide">
-    <div class="media-box">
-      <img src="assets/images/hardware/motor-driver-v2.jpg" alt="FOC driver board"
-           onerror="this.style.display='none'; this.parentNode.textContent='FOC board — assets/images/hardware/motor-driver-v2.jpg';">
+  <!-- ============================== V1 ============================== -->
+  <h2 class="section-h2">v1 · First FOC board</h2>
+  <p>
+    First purpose-designed FOC driver PCB — a three-phase power stage on a black board, paired with
+    a hand-wired gate driver and control stage on perfboard beside it. The layout shows the power
+    routing for the three half-bridge phases (+12V rails running around the board perimeter, phase
+    outputs U/V/W on the left edge).
+  </p>
+
+  <div class="media-grid" style="grid-template-columns: repeat(2, 1fr);">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v1-pcb.png" alt="FOC driver v1 — PCB layout"
+             onerror="this.style.display='none'; this.parentNode.textContent='v1 layout — assets/images/hardware/foc-v1-pcb.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Board layout</strong>
+        Power routing for the three-phase stage.
+      </div>
     </div>
-    <div class="media-caption">Three-phase FOC driver board — earlier revision.</div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v1-build.jpg" alt="FOC driver v1 — physical build"
+             onerror="this.style.display='none'; this.parentNode.textContent='v1 build — assets/images/hardware/foc-v1-build.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Physical build</strong>
+        Three-phase PCB (left) with hand-wired gate-drive stage on perfboard (right).
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================== V2 ============================== -->
+  <h2 class="section-h2">v2 · Integrated board</h2>
+  <p>
+    First fully integrated FOC driver — everything on one green PCB, including the gate drivers,
+    power stage, and control front end. This is the board running the current bare-metal
+    sensorless FOC firmware at 24 kHz. Full firmware details on the
+    <a href="foc-esc.html">FOC ESC page</a>.
+  </p>
+
+  <div class="media-grid" style="grid-template-columns: repeat(2, 1fr);">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v2-build.jpg" alt="FOC driver v2 — integrated board"
+             onerror="this.style.display='none'; this.parentNode.textContent='v2 build — assets/images/hardware/foc-v2-build.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Integrated board</strong>
+        Front (left) and back (right) — everything on one PCB.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================== V3 ============================== -->
+  <h2 class="section-h2">v3 · Four-layer revision (in progress)</h2>
+  <p>
+    Next revision currently in layout. The design goal here is specific: build a board whose
+    thermal behavior can be predicted accurately by the KiCad Digital Twin before fabrication.
+    The four-layer stack — top copper, two inner layers, bottom copper — is modeled for thermal
+    simulation, so the twin's per-component θ<sub>ja</sub> and 2D thermal diffusion fields can be
+    checked against a real board once it's fabricated.
+  </p>
+
+  <div class="media-grid">
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-layer-top.png" alt="FOC v3 top copper layer"
+             onerror="this.style.display='none'; this.parentNode.textContent='Top — assets/images/hardware/foc-v3-layer-top.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Layer 1 · Top copper</strong>
+        Power routing and signal traces for the three-phase stage.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-layer-inner1.png" alt="FOC v3 inner layer 1"
+             onerror="this.style.display='none'; this.parentNode.textContent='Inner 1 — assets/images/hardware/foc-v3-layer-inner1.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Layer 2 · Inner</strong>
+        Ground plane and current return paths.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-layer-inner2.png" alt="FOC v3 inner layer 2"
+             onerror="this.style.display='none'; this.parentNode.textContent='Inner 2 — assets/images/hardware/foc-v3-layer-inner2.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Layer 3 · Inner</strong>
+        Secondary copper pour and signal routing.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-layer-bottom.png" alt="FOC v3 bottom copper layer"
+             onerror="this.style.display='none'; this.parentNode.textContent='Bottom — assets/images/hardware/foc-v3-layer-bottom.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Layer 4 · Bottom copper</strong>
+        Signal routing and thermal vias.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-render-1.jpg" alt="FOC v3 board render — front view"
+             onerror="this.style.display='none'; this.parentNode.textContent='Render front — assets/images/hardware/foc-v3-render-1.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Render · front</strong>
+        Full board layout — capacitor bank on the left, three-phase stage center-right.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-render-2.jpg" alt="FOC v3 board render — back view"
+             onerror="this.style.display='none'; this.parentNode.textContent='Render back — assets/images/hardware/foc-v3-render-2.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Render · back</strong>
+        Opposite view showing the gate driver and current-sense front end.
+      </div>
+    </div>
+
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/foc-v3-layers.png" alt="FOC v3 combined layers view"
+             onerror="this.style.display='none'; this.parentNode.textContent='Layers view — assets/images/hardware/foc-v3-layers.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Combined view</strong>
+        All four copper layers overlaid — used as input for the digital twin's trace resistance and thermal modeling.
+      </div>
+    </div>
+
   </div>
 
   <div class="project-cta">
     <a href="foc-esc.html">→ FOC ESC firmware</a>
-    <a href="motor-drivers.html">→ Motor Drivers</a>
+    <a href="digital-twin.html">→ KiCad Digital Twin</a>
     <a href="index.html">← all projects</a>
   </div>
 
