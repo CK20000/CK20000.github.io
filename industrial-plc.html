@@ -31,7 +31,10 @@
 
   <div class="project-title-block">
     <h1>Modular Industrial PLC</h1>
-    <div class="meta">2024 · STM32F407VET6 · 168 MHz</div>
+    <div class="meta">
+      2024 · STM32F407VET6 · 168 MHz · 
+      <a href="https://github.com/CK20000/STM32F407-Industrial-PLC" target="_blank">GitHub ↗</a>
+    </div>
     <div class="project-specs">
       <span class="spec"><span class="k">mcu:</span><span class="v">STM32F407VET6</span></span>
       <span class="spec"><span class="k">clock:</span><span class="v">168 MHz</span></span>
@@ -58,9 +61,35 @@
     <li><strong>Debug + DFU</strong> — 4-pin SWD header and USB-C DFU interface</li>
   </ul>
 
+  <!-- ============================== SCHEMATIC DESIGN ============================== -->
+  <h2 class="section-h2">Schematic design</h2>
+  <p>
+    The board was designed in KiCad with separate sheets for power and the main microcontroller.
+    The power stage converts a 12V rail down to 5V using an XL1509 buck converter, then to two
+    independent 3.3V rails via AMS1117 regulators. The main controller is an STM32F407VET6,
+    supported by an ESP-12F for Wi-Fi, isolated RS-485, and dedicated analog front-end stages
+    for the 0-10V inputs and DAC outputs.
+  </p>
+
+  <div class="media-full media-wide">
+    <div class="media-box">
+      <img src="assets/images/hardware/plc-schematic-power.png" alt="PLC power supply and Wi-Fi schematic"
+           onerror="this.style.display='none'; this.parentNode.textContent='Schematic — assets/images/hardware/plc-schematic-power.png';">
+    </div>
+    <div class="media-caption">Power supply and ESP-12F schematic — XL1509 buck converter, AMS1117 LDOs, and Wi-Fi module.</div>
+  </div>
+
+  <div class="media-full media-wide">
+    <div class="media-box">
+      <img src="assets/images/hardware/plc-schematic-mcu.png" alt="PLC main MCU schematic"
+           onerror="this.style.display='none'; this.parentNode.textContent='Schematic — assets/images/hardware/plc-schematic-mcu.png';">
+    </div>
+    <div class="media-caption">Main MCU schematic — STM32F407VET6, analog input buffers, RS-485, and USB.</div>
+  </div>
+
   <div class="project-cta">
+    <a href="https://github.com/CK20000/STM32F407-Industrial-PLC" target="_blank">→ Full source on GitHub</a>
     <a href="index.html">← all projects</a>
-    <a href="cv.pdf" target="_blank">Download CV</a>
   </div>
 
 </main>
