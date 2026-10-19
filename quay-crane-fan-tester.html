@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quay Crane Inverter Fan Tester — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/hardware/quay-crane-tester.jpg" alt="Quay crane inverter fan tester"
+         onerror="this.style.display='none'; this.parentNode.textContent='Tester — assets/images/hardware/quay-crane-tester.jpg';">
+  </div>
+  <div class="hero-caption">Dedicated QC inverter fan tester — identifies faulty cooling fans before they trigger a crane fault.</div>
+
+  <div class="project-title-block">
+    <h1>Quay Crane Inverter Fan Tester</h1>
+    <div class="meta">Industrial project · Colombo International Container Terminals</div>
+  </div>
+
+  <h2 class="section-h2">The problem</h2>
+  <p>
+    Quay cranes use large inverters to drive their hoist and trolley motors. These inverters rely on
+    four cooling fans. When one fails, the inverter throws a generic "blower fan fault" — but there
+    was no device on-site to identify <em>which</em> of the four fans was actually faulty. Technicians
+    had to guess or swap them out one by one, causing unnecessary downtime.
+  </p>
+
+  <h2 class="section-h2">The solution</h2>
+  <p>
+    I designed and built a dedicated tester. It applies a PWM signal to drive the fans and monitors
+    the feedback from the built-in tachometer. By comparing the commanded speed against the actual
+    measured RPM, the device instantly identifies which fan is underperforming or dead.
+  </p>
+
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/hardware/quay-crane-internal.jpg" alt="Internal wiring of the fan tester"
+             onerror="this.style.display='none'; this.parentNode.textContent='Internal — assets/images/hardware/quay-crane-internal.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>Internal build</strong>
+        Custom controller board, PWM driver stage, and feedback monitoring wiring.
+      </div>
+    </div>
+  </div>
+
+  <div class="project-cta">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">Download CV</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
