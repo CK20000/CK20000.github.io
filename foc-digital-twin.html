@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOC ESC Digital Twin — Chanu Kalubowila</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="brand"><a href="index.html">chanu@workbench</a></div>
+  <div class="links">
+    <a href="index.html">← all projects</a>
+    <a href="cv.pdf" target="_blank">cv.pdf</a>
+    <a href="https://github.com/CK20000" target="_blank">github</a>
+    <a href="mailto:chanuk@uom.lk">email</a>
+  </div>
+</nav>
+
+<main class="project-page">
+
+  <div class="hero-image">
+    <img src="assets/images/foc-esc-digital-twin/foc-dt-scope.jpg" alt="FOC Digital Twin Scope Dashboard"
+         onerror="this.style.display='none'; this.parentNode.textContent='Dashboard — assets/images/foc-esc-digital-twin/foc-dt-scope.jpg';">
+  </div>
+  <div class="hero-caption">Live PyQt6 dashboard — 48 kHz FOC loop visualizing PWM duty, phase currents, rotor angle, D/Q currents, and ADC ground bounce.</div>
+
+  <div class="project-title-block">
+    <h1>FOC ESC Digital Twin</h1>
+    <div class="meta">2026 – Present · SIL & HIL Simulation Platform · STM32G431</div>
+    <div class="project-specs">
+      <span class="spec"><span class="k">loop:</span><span class="v">48 kHz</span></span>
+      <span class="spec"><span class="k">compute:</span><span class="v">1,224 cycles (7.2 µs)</span></span>
+      <span class="spec"><span class="k">physics:</span><span class="v">C-Plant (150k cycles/s)</span></span>
+      <span class="spec"><span class="k">thermal:</span><span class="v">6-layer PCB FDM</span></span>
+      <span class="spec"><span class="k">validation:</span><span class="v">Real-hardware benchmark</span></span>
+    </div>
+  </div>
+
+  <h2 class="section-h2">What it is</h2>
+  <p>
+    A high-fidelity digital twin for a custom 6S drone ESC. It runs a fully closed-loop simulation of a 
+    48 kHz Field Oriented Control (FOC) motor controller, combining bare-metal C firmware, a high-speed 
+    C-Plant physics engine, a Python-based thermal solver, and real-hardware validation on actual STM32G431 silicon.
+  </p>
+  <p>
+    This isn't just a control loop simulation. It is a complete Software-in-the-Loop (SIL) and Hardware-in-the-Loop (HIL) 
+    environment that models inverter dead-time, battery voltage sag, 3D ground bounce, and PCB heat diffusion in real-time.
+  </p>
+
+  <h2 class="section-h2">Key Engineering Achievements</h2>
+  <ul>
+    <li><strong>Real-Hardware Benchmarking:</strong> Proved flight-readiness by running the FOC loop for 240,000 iterations on the STM32G431, capturing a worst-case execution time of exactly <strong>1,224 cycles (7.2 µs)</strong> using the DWT cycle counter.</li>
+    <li><strong>C-Plant Physics Engine:</strong> Modeled the Permanent Magnet Synchronous Motor (PMSM), 200ns inverter dead-time distortion, MOSFET Rds(on) voltage drops, and battery sag in C, achieving over 150,000 simulation cycles per second.</li>
+    <li><strong>3D Ground Bounce HIL:</strong> Extracted real copper resistance from the PCB layout and injected differential ground bounce errors into the ADC measurements in real-time to see how the firmware handles physical noise.</li>
+    <li><strong>6-Layer Thermal FDM:</strong> Solved 6-layer PCB heat diffusion in real-time, calculating both conduction (I²R) and switching (Tr/Tf) losses based on FET datasheets.</li>
+    <li><strong>48 kHz Control Loop:</strong> Implemented I-f startup to drag the rotor from a dead stop, a Sliding Mode Observer (SMO) with Phase-Locked Loop (PLL), and Space Vector PWM.</li>
+  </ul>
+
+  <h2 class="section-h2">Simulation Layers</h2>
+  <p>
+    The digital twin solves multiple physical domains simultaneously. The thermal model tracks heat across the copper layers, while the ground bounce model calculates the voltage differentials caused by high-current switching.
+  </p>
+
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/foc-esc-digital-twin/foc-dt-thermal.jpg" alt="6-Layer PCB Thermal FDM"
+             onerror="this.style.display='none'; this.parentNode.textContent='Thermal — assets/images/foc-esc-digital-twin/foc-dt-thermal.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>6-Layer PCB Thermal FDM</strong>
+        Real-time heat diffusion across F_Cu, In1_Cu, In2_Cu, In3_Cu, In4_Cu, and B_Cu layers based on FET conduction and switching losses.
+      </div>
+    </div>
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/foc-esc-digital-twin/foc-dt-gnd-bounce.jpg" alt="3D Tensor Ground Bounce Map"
+             onerror="this.style.display='none'; this.parentNode.textContent='Ground Bounce — assets/images/foc-esc-digital-twin/foc-dt-gnd-bounce.jpg';">
+      </div>
+      <div class="media-caption">
+        <strong>3D Tensor Ground Bounce</strong>
+        Real-time spatial mapping of differential ground bounce errors (mV) injected into the ADC measurements at 27.7 A.
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-h2">The Physical Hardware</h2>
+  <p>
+    The digital twin is not a generic model—it simulates the exact thermal, parasitic, and ground bounce properties of this finalized custom PCB.
+  </p>
+
+  <div class="media-grid">
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/foc-esc-digital-twin/foc-esc-top.jpg" alt="FOC ESC PCB Top Layer"
+             onerror="this.style.display='none'; this.parentNode.textContent='Top Layer — assets/images/foc-esc-digital-twin/foc-esc-top.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Top Layer</strong>
+        Three-phase power stage, gate drivers, MCU, and shunt resistors.
+      </div>
+    </div>
+    <div class="media-item">
+      <div class="media-box">
+        <img src="assets/images/foc-esc-digital-twin/foc-esc-bottom.jpg" alt="FOC ESC PCB Bottom Layer"
+             onerror="this.style.display='none'; this.parentNode.textContent='Bottom Layer — assets/images/foc-esc-digital-twin/foc-esc-bottom.png';">
+      </div>
+      <div class="media-caption">
+        <strong>Bottom Layer</strong>
+        Ground plane, return paths, and thermal vias modeled in the HIL solver.
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-h2">Real Silicon Validation</h2>
+  <p>
+    To prove the firmware is flight-ready, the `main.c` includes a Flash Readout Benchmark. It runs the control loop 
+    for exactly 5 seconds (240,000 iterations) and saves the worst-case execution time to the last 2KB page of Flash. 
+    Reading this data back via DFU confirmed the loop executes in exactly 1,224 cycles (7.2 µs) — well within the 
+    real-time budget.
+  </p>
+
+  <div class="project-cta">
+    <a href="https://github.com/CK20000" target="_blank">→ Source on GitHub</a>
+    <a href="foc-drivers.html">→ FOC Driver Iterations</a>
+    <a href="index.html">← all projects</a>
+  </div>
+
+</main>
+
+<footer>
+  <div>Built with <span class="accent">&lt;/&gt;</span> in plain HTML — no frameworks, no trackers, no dependencies.</div>
+  <div style="margin-top:10px">© 2026 Chanu Kalubowila · <a href="mailto:chanuk@uom.lk">chanuk@uom.lk</a></div>
+</footer>
+
+</body>
+</html>
