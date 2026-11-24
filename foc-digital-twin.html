@@ -35,7 +35,6 @@
     <div class="project-specs">
       <span class="spec"><span class="k">loop:</span><span class="v">48 kHz</span></span>
       <span class="spec"><span class="k">compute:</span><span class="v">1,224 cycles (7.2 µs)</span></span>
-      <span class="spec"><span class="k">with DShot:</span><span class="v">1,162 cycles (6.8 µs)</span></span>
       <span class="spec"><span class="k">physics:</span><span class="v">C-Plant (150k cycles/s)</span></span>
       <span class="spec"><span class="k">thermal:</span><span class="v">6-layer PCB FDM</span></span>
       <span class="spec"><span class="k">validation:</span><span class="v">Real-hardware benchmark</span></span>
@@ -137,7 +136,7 @@
     <li><strong>Adaptive bit threshold:</strong> The Arduino core ran the chip at 150 MHz, not 170 MHz, so a fixed threshold failed. The decoder now measures the bit period and sets the 0/1 threshold from it.</li>
     <li><strong>Inverted CRC:</strong> With bidirectional DShot enabled, Betaflight sends an inverted CRC. The decoder accepts both forms.</li>
     <li><strong>Interrupt priority:</strong> Every second frame collided with the 1 kHz SysTick interrupt and the edge timestamp came out late. Giving the EXTI edge interrupt a higher priority than SysTick fixed it.</li>
-    <li><strong>Flash-logged result:</strong> The firmware wrote a debug record to flash, which I read back over DFU. It shows 240,000 loop iterations with DShot decoding running, a worst-case loop time of 1,162 cycles (6.8 µs), and a throttle value of 480 from the DShot command reaching the FOC core.</li>
+    <li><strong>Flash-logged result:</strong> The firmware wrote a debug record to flash, which I read back over DFU. It shows 240,000 loop iterations with DShot decoding running and a throttle value of 480 (48%) from the DShot command arriving in the FOC core. In this run the drive state was still OFF, with no motor attached, so the 1,162-cycle worst case it recorded is not a closed-loop timing. The closed-loop figure is the 1,224 cycles (7.2 µs) above.</li>
   </ul>
 
   <div class="project-cta">
